@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Paper,
   Typography,
@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { emailValidator } from "../utils/validators";
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -38,18 +39,33 @@ export default function Login() {
     password: "",
   });
 
-  function handleChange(e) {
+  useEffect(() => {
+    console.log(values);
+    if (emailValidator(values.email)) {
+      setValidForm(true);
+    }
+    if (values.password.length >= 4) {
+      setValidForm(true);
+    } else {
+      setValidForm(false);
+    }
+  }, [values]);
+  const [formValid, setValidForm] = useState(false);
+  const handleChange = (e) => {
     const key = e.target.id;
     const value = e.target.value;
     setValues((values) => ({
       ...values,
       [key]: value,
     }));
-  }
+  };
 
-  function handleSubmit() {
-    axios.post(LOGIN_ROUTE, values);
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formValid) {
+      axios.post(LOGIN_ROUTE, values);
+    }
+  };
   return (
     <Grid container sx={commonStyles}>
       <Paper sx={FormStyle} xs={12} sm={8} md={5} xl={3}>
@@ -57,7 +73,7 @@ export default function Login() {
           Login
         </Typography>
 
-        <Form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Grid>
             <TextField
               onChange={handleChange}
@@ -65,6 +81,8 @@ export default function Login() {
               id="email"
               value={values.email}
               fullWidth
+              required
+              type="email"
             ></TextField>
           </Grid>
           <Grid>
@@ -75,25 +93,31 @@ export default function Login() {
               value={values.password}
               type="password"
               fullWidth
-            ></TextField>
+              required
+              minlength="4"
+            />
           </Grid>
           <Button
             variant="contained"
             size="large"
-            onClick={handleSubmit}
             fullWidth
             sx={{ mb: 1 }}
-            type="submit"
+            disabled={!formValid}
+            onClick={handleSubmit}
           >
             Login
           </Button>
-          <Typography variant="body1">
-            You don't have an account yet? &nbsp;
-            <MuiLink sx={{ mb: 1 }}>
-              <Link to="/signup">Sign up</Link>
-            </MuiLink>
-          </Typography>
-        </Form>
+          {/* this button is only to make a fake submit button
+            so form validation and the button disabling works
+            */}
+          <Button type="submit" sx={{ display: "none" }}></Button>
+        </form>
+        <Typography variant="body1">
+          You don't have an account yet? &nbsp;
+          <MuiLink sx={{ mb: 1 }} component={Link} to="/signup">
+            Sign Up
+          </MuiLink>
+        </Typography>
       </Paper>
     </Grid>
   );

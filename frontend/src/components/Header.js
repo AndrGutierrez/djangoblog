@@ -36,7 +36,7 @@ export default function Header({ theme }) {
               <ListItemText primary="Home" />
             </ListItem>
           </List>
-          <Grid container spacing={1} xs={6} md={3} xl={4}>
+          <Grid container item spacing={1} xs={6} md={3} xl={4}>
             <Grid item xs={6}>
               <Link to="/login">
                 <Button color="secondary" variant="outlined" fullWidth>
