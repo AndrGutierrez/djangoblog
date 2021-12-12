@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Box, Paper, Typography, TextField, Grid } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Paper,
+  Typography,
+  TextField,
+  Grid,
+  Button,
+  Link as MuiLink,
+} from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -8,9 +16,11 @@ const commonStyles = {
   padding: "2rem",
   display: "flex",
   justifyContent: "center",
+  marginTop: "10px",
   ["@media (max-width:780px)"]: {
     padding: 0,
   },
+  "& .MuiTextField-root": { mb: 1 },
 };
 
 const FormStyle = {
@@ -18,22 +28,19 @@ const FormStyle = {
 };
 
 export default function Signup() {
+  const SIGNUP_ROUTE = `${process.env.API_ROUTE}/api/users/`;
+  axios.defaults.xsrfHeaderName = "X-CSRFToken";
+  axios.defaults.xsrfCookieName = "csrftoken";
+  axios.defaults.withCredentials = true;
+
   const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
-    firstName: "",
-    lastName: "",
+    password_confirmation: "",
+    first_name: "",
+    last_name: "",
   });
-  const SIGNUP_ROUTE = `${process.env.API_ROUTE}/api/users`;
-  useEffect(async () => {
-    const a = axios
-      .get(SIGNUP_ROUTE)
-      .then((response) => response.json())
-      .then((response) => response);
-    console.log(a);
-  }, []);
 
   function handleChange(e) {
     const key = e.target.id;
@@ -43,11 +50,25 @@ export default function Signup() {
       [key]: value,
     }));
   }
+
+  function handleSubmit() {
+    axios.post(SIGNUP_ROUTE, values);
+  }
   return (
-    <Grid sx={commonStyles}>
-      <Grid xs={12} sm={6} md={4} xl={3}>
-        <Paper sx={FormStyle}>
-          <Typography variant="h6">Signup</Typography>
+    <Grid container sx={commonStyles}>
+      <Paper sx={FormStyle} xs={12} sm={8} md={5} xl={3}>
+        <Typography variant="h5" sx={{ mb: 1 }}>
+          Signup
+        </Typography>
+
+        <Grid>
+          <TextField
+            onChange={handleChange}
+            label={"Email"}
+            id="email"
+            value={values.email}
+            fullWidth
+          ></TextField>
           <TextField
             onChange={handleChange}
             label={"Username"}
@@ -55,8 +76,65 @@ export default function Signup() {
             value={values.username}
             fullWidth
           ></TextField>
-        </Paper>
-      </Grid>
+        </Grid>
+
+        <Grid container columnSpacing={1}>
+          <Grid xs={12} sm={6} md={6} item>
+            <TextField
+              onChange={handleChange}
+              label={"First Name"}
+              id="first_name"
+              value={values.first_name}
+              fullWidth
+            ></TextField>
+          </Grid>
+          <Grid xs={12} sm={6} md={6} item>
+            <TextField
+              onChange={handleChange}
+              label={"Last Name"}
+              id="last_name"
+              value={values.last_name}
+              fullWidth
+            ></TextField>
+          </Grid>
+        </Grid>
+
+        <Grid>
+          <TextField
+            onChange={handleChange}
+            label={"Password"}
+            id="password"
+            value={values.password}
+            type="password"
+            fullWidth
+          ></TextField>
+        </Grid>
+        <Grid>
+          <TextField
+            onChange={handleChange}
+            label={"Password Confirmation"}
+            id="password_confirmation"
+            value={values.password_confirmation}
+            type="password"
+            fullWidth
+          ></TextField>
+        </Grid>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleSubmit}
+          fullWidth
+          sx={{ mb: 1 }}
+        >
+          Sign up
+        </Button>
+        <Typography variant="body1">
+          Already have an account? &nbsp;
+          <MuiLink sx={{ mb: 1 }}>
+            <Link to="/login">Login</Link>
+          </MuiLink>
+        </Typography>
+      </Paper>
     </Grid>
   );
 }

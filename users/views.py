@@ -1,14 +1,14 @@
+'''User views (login, signup, logout, etc)'''
 from rest_framework.decorators import api_view, permission_classes
-from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.http import HttpResponse
 from django.contrib.auth.models import AnonymousUser
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
+from varname import nameof
 from users.models import User
 from utils.api import store_user, list_model
 from .serializers import UserSerializer
-from varname import nameof
 
 
 @api_view(['GET', 'POST'])
@@ -18,13 +18,17 @@ from varname import nameof
 def login_view(request):
     """login view"""
     response = HttpResponse("logged in successfully", status=200)
-    print(request.user)
-    user = authenticate(email=request.data.get('email'),
-                        password=request.data.get('password'))
-    if not isinstance(user, AnonymousUser):
-        login(request, user)
-    else:
+    try:
+        user = authenticate(email=request.data.get('email'),
+                            password=request.data.get('password'))
+        if not isinstance(user, AnonymousUser) and user is not None:
+            login(request, user)
+        else:
+            response = HttpResponse("failed to login", status=401)
+
+    except:
         response = HttpResponse("failed to login", status=401)
+
     return response
 
 

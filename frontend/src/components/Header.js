@@ -8,16 +8,12 @@ import {
   ListItemText,
   Button,
   Grid,
-  Item,
 } from "@mui/material";
 
 import { ThemeProvider } from "@mui/material/styles";
 const listStyles = {
   display: "flex",
   justifyContent: "space-between",
-};
-const buttonStyles = {
-  width: "100%",
 };
 import { Link } from "react-router-dom";
 
@@ -35,23 +31,23 @@ export default function Header({ theme }) {
           >
             Djangoblog
           </Typography>
-          <List className="" sx={listStyles}>
+          <List className="">
             <ListItem component={Link} to="/">
               <ListItemText primary="Home" />
             </ListItem>
           </List>
-          <Grid container spacing={1} md={2}>
+          <Grid container spacing={1} xs={6} md={3} xl={4}>
             <Grid item xs={6}>
-              <Link to="/Login">
-                <Button color="secondary" variant="outlined" sx={buttonStyles}>
+              <Link to="/login">
+                <Button color="secondary" variant="outlined" fullWidth>
                   Login
                 </Button>
               </Link>
             </Grid>
             <Grid item xs={6}>
               <Link to="/signup">
-                <Button color="secondary" variant="contained" sx={buttonStyles}>
-                  Signup
+                <Button color="secondary" variant="contained" fullWidth>
+                  Sign up
                 </Button>
               </Link>
             </Grid>

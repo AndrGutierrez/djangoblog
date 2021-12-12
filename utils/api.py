@@ -15,7 +15,11 @@ class Request:
 
 def store_user(request):
     email = request.data['email']
-    if User.objects.filter(email=email).exists():
+    password = request.data['password']
+    password_confirmation = request.data['password_confirmation']
+    email_exists = User.objects.filter(email=email).exists()
+
+    if email_exists or password != password_confirmation:
         response = Response("email already exist",
                             status=status.HTTP_400_BAD_REQUEST)
         return response
@@ -106,7 +110,6 @@ def get_model(request, model, model_serializer, pk):
 def delete_model(model, pk):
     """Deletes the model by the id/pk"""
     model = get_model_by_pk(model, pk)
-    print(model)
     model.delete()
     response = Response(status=status.HTTP_204_NO_CONTENT)
     return response
