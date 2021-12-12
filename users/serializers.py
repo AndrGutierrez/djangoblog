@@ -9,6 +9,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     """User Profile model JSON serializer"""
     class Meta:
         model = Profile
+        ordering = ['-id']
         fields = ('id', 'biography', 'profile_picture', 'banner', 'created',
                   'modified')
 
@@ -21,6 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        ordering = ['-id']
         fields = ('id', 'password', 'last_login', 'is_superuser', 'username',
                   'first_name', 'last_name', 'email', 'is_staff', 'is_active',
                   'date_joined', 'profile', 'posts')

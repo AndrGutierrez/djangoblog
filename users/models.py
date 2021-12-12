@@ -27,6 +27,9 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.email
 
@@ -43,6 +46,9 @@ class Profile(models.Model):
     biography = TextField(blank=True)
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         """Return username"""

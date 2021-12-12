@@ -13,6 +13,9 @@ class Post(models.Model):
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-id']
+
 
 class Comment(models.Model):
     '''Post comment model'''
@@ -21,3 +24,6 @@ class Comment(models.Model):
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
     content = TextField(null=False, blank=False)
+
+    class Meta:
+        ordering = ['-id']
