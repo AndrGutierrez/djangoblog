@@ -47,7 +47,7 @@ def get_user_by_username(username, request):
 
 def list_model(request, model_serializer, model, model_name):
     """
-    List users with profiles or create new users and profiles
+    List database entity
     """
     data = []
     next_page = 1
