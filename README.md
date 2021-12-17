@@ -18,10 +18,10 @@ DATABASE_ROOT_PASSWORD=""
 DATABASE_NAME=djangoblog
 DATABASE_PORT=3066
 DEBUG=True
-
 ```
 
 ### Setup frontend
+Go to frontend folder
 
 ### Set frontend env variables
 The api route may change depending on where it is hosted, in development by default it is like this
@@ -35,8 +35,8 @@ npm i
 npm run build
 ```
 
-after this go to your root folder and run 
 ### Run project
+after this go to your root folder and run 
 ```
 python manage.py runserver
 ```
