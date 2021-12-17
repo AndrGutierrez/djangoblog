@@ -7,7 +7,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import login, logout, authenticate
 from varname import nameof
 from users.models import User
-from utils.api import store_user, list_model
+from utils.api import store_user, list_model, get_user_by_email
 from .serializers import UserSerializer
 
 
@@ -18,16 +18,23 @@ from .serializers import UserSerializer
 def login_view(request):
     """login view"""
     response = HttpResponse("logged in successfully", status=200)
+
     try:
-        user = authenticate(email=request.data.get('email'),
-                            password=request.data.get('password'))
-        if not isinstance(user, AnonymousUser) and user is not None:
-            login(request, user)
-        else:
-            response = HttpResponse("failed to login", status=401)
+        if request.method == 'GET' and request.user.is_authenticated():
+            response = get_user_by_email(request.user.email, request)
+
+        elif request.method == 'POST':
+            user = authenticate(email=request.data.get('email'),
+                                password=request.data.get('password'))
+
+            if not isinstance(user, AnonymousUser) and user is not None:
+                login(request, user)
+
+            else:
+                response = HttpResponse("failed to login", status=401)
 
     except:
-        response = HttpResponse("failed to login", status=401)
+        response = HttpResponse("Authentication failed", status=401)
 
     return response
 

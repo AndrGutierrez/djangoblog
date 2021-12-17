@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
-import { createTheme } from "@mui/material/styles";
+import axios from "axios";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
@@ -15,19 +16,24 @@ const theme = createTheme({
 });
 export default function Layout({ children }) {
   //pass props to children
-  const childrenWithTheme = React.Children.map(children, (child) => {
-    // Checking isValidElement is the safe way and avoids a typescript
-    // error too.
+  const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth`;
+  const user = axios
+    .get(LOGIN_ROUTE, { withCredentials: true })
+    .then((response) => response.data);
+
+  console.log(user);
+  const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child, { theme });
+      return React.cloneElement(child, { user });
     }
     return child;
   });
+
   return (
-    <>
-      <Header theme={theme} />
-      {childrenWithTheme}
-      <Footer theme={theme} />
-    </>
+    <ThemeProvider theme={theme}>
+      <Header />
+      {childrenWithProps}
+      <Footer />
+    </ThemeProvider>
   );
 }

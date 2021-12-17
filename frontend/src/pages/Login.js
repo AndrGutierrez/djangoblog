@@ -8,7 +8,7 @@ import {
   Link as MuiLink,
 } from "@mui/material";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { emailValidator } from "../utils/validators";
 
 const commonStyles = {
@@ -30,6 +30,7 @@ const FormStyle = {
 
 export default function Login() {
   const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth/`;
+  const history = useHistory();
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
@@ -40,7 +41,6 @@ export default function Login() {
   });
 
   useEffect(() => {
-    console.log(values);
     if (emailValidator(values.email)) {
       setValidForm(true);
     }
@@ -60,11 +60,15 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formValid) {
-      axios.post(LOGIN_ROUTE, values);
-    }
+    await axios
+      .post(LOGIN_ROUTE, values)
+      .catch((e) => {
+        throw e;
+      })
+
+      .then(() => history.push("/"));
   };
   return (
     <Grid container sx={commonStyles}>
@@ -94,7 +98,7 @@ export default function Login() {
               type="password"
               fullWidth
               required
-              minlength="4"
+              minLength="4"
             />
           </Grid>
           <Button

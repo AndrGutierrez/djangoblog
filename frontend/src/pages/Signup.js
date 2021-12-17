@@ -10,7 +10,7 @@ import {
 
 import { emailValidator } from "../utils/validators";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -31,6 +31,7 @@ const FormStyle = {
 
 export default function Signup() {
   const SIGNUP_ROUTE = `${process.env.API_ROUTE}/api/users/`;
+  const history = useHistory();
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
@@ -71,7 +72,12 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formValid) {
-      axios.post(SIGNUP_ROUTE, values);
+      axios
+        .post(SIGNUP_ROUTE, values)
+        .catch((e) => {
+          throw e;
+        })
+        .then(() => history.push(`/signup/success/${values.username}`));
     }
   };
   return (

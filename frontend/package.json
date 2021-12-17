@@ -1,7 +1,7 @@
 {
     "name": "frontend",
     "version": "1.0.0",
-    "description": "",
+    "description": "frontend for djangoblog made with react",
     "main": "index.js",
     "scripts": {
         "build": "webpack --mode production",
@@ -9,11 +9,12 @@
         "start": "webpack serve --open --mode development"
     },
     "keywords": [],
-    "author": "",
+    "author": "contact@andresgutierrezdev.me",
     "license": "ISC",
     "dependencies": {
         "@emotion/react": "^11.7.0",
         "@emotion/styled": "^11.6.0",
+        "@mui/icons-material": "^5.2.1",
         "@mui/material": "^5.2.2",
         "axios": "^0.21.1",
         "axios-progress-bar": "^1.2.0",

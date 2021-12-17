@@ -38,9 +38,9 @@ def get_model_by_pk(model, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-def get_user_by_username(username, request):
-    '''gets user by username'''
-    user = User.objects.get(username=username)
+def get_user_by_email(email, request):
+    '''gets user by email'''
+    user = User.objects.get(email=email)
     serializer = UserSerializer(user, context={request: 'request'})
     return Response(serializer.data)
 
