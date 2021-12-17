@@ -9,7 +9,8 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-### Set env variables (I will declarate them like this in a .env file, these values may change depending on your database setup)
+### Set env variables 
+I will declarate them like this in a .env file, these values may change depending on your database setup
 ```
 DATABASE_USER=root
 DATABASE_HOST=localhost
@@ -21,12 +22,20 @@ DEBUG=True
 ```
 
 ### Setup frontend
-after this go to your root folder and run 
+
+### Set frontend env variables
+The api route may change depending on where it is hosted, in development by default it is like this
+```
+API_ROUTE='http://localhost:8000'
+```
+
+### Build frontend
 ```
 npm i
 npm run build
 ```
 
+after this go to your root folder and run 
 ### Run project
 ```
 python manage.py runserver
