@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import axios from "axios";
@@ -12,6 +12,9 @@ const theme = createTheme({
     secondary: {
       main: "#FFE652",
     },
+    neutral: {
+      main: "#ffffff",
+    },
   },
 });
 export default function Layout({ children }) {
@@ -21,10 +24,9 @@ export default function Layout({ children }) {
     .get(LOGIN_ROUTE, { withCredentials: true })
     .then((response) => response.data);
 
-  console.log(user);
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child, { user });
+      return React.cloneElement(child, { user, theme });
     }
     return child;
   });

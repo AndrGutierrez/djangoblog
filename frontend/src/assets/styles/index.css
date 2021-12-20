@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&family=PT+Sans+Narrow&display=swap");
 
 body {
   margin: 0;
@@ -7,4 +7,8 @@ body {
 a {
   text-decoration: none;
   color: unset;
+}
+
+.page_title {
+  font-family: "PT Sans Narrow" !important;
 }

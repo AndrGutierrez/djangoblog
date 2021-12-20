@@ -40,6 +40,8 @@ export default function Login() {
     password: "",
   });
 
+  const [formValid, setValidForm] = useState(false);
+
   useEffect(() => {
     if (emailValidator(values.email)) {
       setValidForm(true);
@@ -50,7 +52,7 @@ export default function Login() {
       setValidForm(false);
     }
   }, [values]);
-  const [formValid, setValidForm] = useState(false);
+
   const handleChange = (e) => {
     const key = e.target.id;
     const value = e.target.value;
@@ -70,6 +72,7 @@ export default function Login() {
 
       .then(() => history.push("/"));
   };
+
   return (
     <Grid container sx={commonStyles}>
       <Paper sx={FormStyle} xs={12} sm={8} md={5} xl={3}>

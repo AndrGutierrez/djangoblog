@@ -8,6 +8,7 @@ import {
   ListItemText,
   Button,
   Grid,
+  Box,
 } from "@mui/material";
 
 const listStyles = {
@@ -26,15 +27,18 @@ export default function Header({ user }) {
           component={Link}
           to="/"
           className="link"
+          sx={{ fontFamily: "PT Sans Narrow" }}
         >
           Djangoblog
         </Typography>
-        <List className="">
-          <ListItem component={Link} to="/">
-            <ListItemText primary="Home" />
-          </ListItem>
-        </List>
-        <Grid container item spacing={1} xs={6} md={3} xl={4}>
+        <Box display={{ xs: "none", lg: "block" }}>
+          <List className="">
+            <ListItem component={Link} to="/">
+              <ListItemText primary="Home" />
+            </ListItem>
+          </List>
+        </Box>
+        <Grid container item spacing={1} xs={7} md={3} xl={4}>
           <Grid item xs={6}>
             <Link to="/login">
               <Button color="secondary" variant="outlined" fullWidth>

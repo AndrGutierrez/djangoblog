@@ -3,6 +3,7 @@ import { Switch, BrowserRouter, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import Posts from "../pages/Posts";
 import CreatedAccount from "../pages/CreatedAccount";
 import Layout from "../components/Layout";
 
@@ -19,6 +20,7 @@ export default function App() {
             path="/signup/success/:username"
             component={CreatedAccount}
           />
+          <Route exact path="/posts" component={Posts} />
         </Layout>
       </Switch>
     </BrowserRouter>
