@@ -20,10 +20,12 @@ def login_view(request):
     response = HttpResponse("logged in successfully", status=200)
 
     try:
-        if request.method == 'GET' and request.user.is_authenticated():
-            response = get_user_by_email(request.user.email, request)
+        if request.method == 'GET':
+            if not request.user.is_authenticated:
+                return HttpResponse("You are not logged in")
+            response = get_user_by_email(request.user, request)
 
-        elif request.method == 'POST':
+        if request.method == 'POST':
             user = authenticate(email=request.data.get('email'),
                                 password=request.data.get('password'))
 
