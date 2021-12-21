@@ -37,9 +37,11 @@ class User(AbstractUser):
 class Profile(models.Model):
     '''User Profile model'''
     user = OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = ImageField(upload_to='users/pictures/profilepic',
-                                 blank=True,
-                                 null=True)
+    profile_picture = ImageField(
+        upload_to='users/pictures/profilepic',
+        blank=True,
+        null=True,
+        default='users/pictures/profilepic/default.jpg')
     banner = ImageField(upload_to='users/pictures/banner',
                         blank=True,
                         null=True)

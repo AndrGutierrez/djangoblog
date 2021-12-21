@@ -9,7 +9,7 @@ class Post(models.Model):
     user = ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = CharField(max_length=255, null=False)
     content = TextField(null=True, blank=True)
-    thumbnail = ImageField(upload_to='posts/pictures/thumbnail')
+    thumbnail = ImageField(upload_to='posts/pictures/thumbnail', null=True)
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
 

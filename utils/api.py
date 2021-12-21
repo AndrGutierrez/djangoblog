@@ -71,7 +71,7 @@ def list_model(request, model_serializer, model, model_name):
     if data.has_previous():
         previous_page = data.previous_page_number()
     response = Response({
-        'data':
+        'body':
         serializer.data,
         'count':
         paginator.count,

@@ -7,13 +7,18 @@ export default function Posts() {
   const config = { withCredentials: true };
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    axios.get(POSTS_ROUTES, config);
+    axios
+      .get(POSTS_ROUTES, config)
+      .then((response) => setPosts(response.data.body));
   }, []);
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
 
   return (
     <>
       {posts.map((post) => (
-        <PostCard>{post}</PostCard>
+        <PostCard post={post} key={`${post.title}-${post.id}`}></PostCard>
       ))}
     </>
   );

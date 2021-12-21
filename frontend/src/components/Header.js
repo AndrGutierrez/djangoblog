@@ -38,22 +38,24 @@ export default function Header({ user }) {
             </ListItem>
           </List>
         </Box>
-        <Grid container item spacing={1} xs={7} md={3} xl={4}>
-          <Grid item xs={6}>
-            <Link to="/login">
-              <Button color="secondary" variant="outlined" fullWidth>
-                Login
-              </Button>
-            </Link>
+        {!user && (
+          <Grid container item spacing={1} xs={7} md={3} xl={4}>
+            <Grid item xs={6}>
+              <Link to="/login">
+                <Button color="secondary" variant="outlined" fullWidth>
+                  Login
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={6}>
+              <Link to="/signup">
+                <Button color="secondary" variant="contained" fullWidth>
+                  Sign up
+                </Button>
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Link to="/signup">
-              <Button color="secondary" variant="contained" fullWidth>
-                Sign up
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
+        )}
       </Toolbar>
     </AppBar>
   );

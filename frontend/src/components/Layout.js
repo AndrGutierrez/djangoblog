@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import axios from "axios";
@@ -19,10 +19,13 @@ const theme = createTheme({
 });
 export default function Layout({ children }) {
   //pass props to children
+  const [user, setUser] = useState(null);
   const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth`;
-  const user = axios
-    .get(LOGIN_ROUTE, { withCredentials: true })
-    .then((response) => response.data);
+  useEffect(() => {
+    axios
+      .get(LOGIN_ROUTE, { withCredentials: true })
+      .then((response) => setUser(response.data));
+  }, []);
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
@@ -33,7 +36,7 @@ export default function Layout({ children }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header user={user} />
       {childrenWithProps}
       <Footer />
     </ThemeProvider>
