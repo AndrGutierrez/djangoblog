@@ -28,20 +28,21 @@ def store_user(request):
     return response
 
 
-def get_model_by_pk(model, pk):
+def get_model_by_pk(request, serializer, model, pk):
     """Gets model by pk"""
     try:
-        mymodel = model.objects.get(pk=pk)
-        return mymodel
+        my_model = model.objects.get(pk=pk)
+        serialized_model = serializer(my_model, context={'request': request})
+        return Response(serialized_model.data)
 
     except model.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-def get_user_by_email(email, request):
+def get_user_by_email(request, email):
     '''gets user by email'''
     user = User.objects.get(email=email)
-    serializer = UserSerializer(user, context={request: 'request'})
+    serializer = UserSerializer(user, context={'request': request})
     return Response(serializer.data)
 
 

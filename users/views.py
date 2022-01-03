@@ -7,7 +7,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import login, logout, authenticate
 from varname import nameof
 from users.models import User
-from utils.api import store_user, list_model, get_user_by_email
+from utils.api import store_user, list_model, get_user_by_email, get_model_by_pk
 from .serializers import UserSerializer
 
 
@@ -44,13 +44,15 @@ def login_view(request):
 @api_view(['GET', 'POST'])
 @csrf_protect
 @ensure_csrf_cookie
-def users(request):
+def users(request, id=None):
     '''store or list users'''
     model_name = nameof(User)
     if request.method == 'POST':
         response = store_user(request)
     if request.method == 'GET':
-        response = list_model(request, UserSerializer, User, model_name)
+        users_list = list_model(request, UserSerializer, User, model_name)
+        single_user = get_model_by_pk(request, UserSerializer, User, id)
+        response = users_list if id is None else single_user
     return response
 
 

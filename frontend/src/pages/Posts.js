@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
+import { Grid } from "@mui/material";
 import axios from "axios";
 
 export default function Posts() {
@@ -11,15 +12,15 @@ export default function Posts() {
       .get(POSTS_ROUTES, config)
       .then((response) => setPosts(response.data.body));
   }, []);
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
+  useEffect(() => {}, [posts]);
 
   return (
-    <>
-      {posts.map((post) => (
-        <PostCard post={post} key={`${post.title}-${post.id}`}></PostCard>
-      ))}
-    </>
+    <Grid item xs={6}>
+      <Grid container spacing={2} sx={{ marginTop: "10px" }}>
+        {posts.map((post) => (
+          <PostCard post={post} key={`${post.title}-${post.id}`}></PostCard>
+        ))}
+      </Grid>
+    </Grid>
   );
 }
