@@ -7,14 +7,16 @@ export default function PostCard({ post }) {
   const [user, setUser] = useState({});
   const USERS_ROUTES = `${process.env.API_ROUTE}/api/users`;
 
-  useEffect(() => {
-    setUser(getModel(USERS_ROUTES, post.user));
+  useEffect(async () => {
+    setUser(await getModel(USERS_ROUTES, post.user));
   }, []);
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    console.log(user.username);
+  }, [user]);
 
   return (
     <Grid item xs={12}>
-      <Link to={`${post.title}-${post.id}`}>
+      <Link to={`${user.username}/${post.title}-${post.id}`}>
         <Paper>
           <Typography variant="h5">{post.title}</Typography>
         </Paper>

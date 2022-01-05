@@ -23,7 +23,7 @@ class User(AbstractUser):
     """Custom Admin User Model for authentication"""
     email = EmailField(blank=False, null=False, unique=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     objects = CustomUserManager()
 
