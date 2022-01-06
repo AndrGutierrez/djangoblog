@@ -3,6 +3,7 @@ import axios from "axios";
 const config = { withCredentials: true };
 export async function getModel(path, id) {
   const MODEL_PATH = `${path}/${id}`;
+  console.log(MODEL_PATH);
   return axios.get(MODEL_PATH, config).then((response) => response.data);
 }
 

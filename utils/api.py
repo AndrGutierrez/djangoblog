@@ -50,12 +50,12 @@ def get_user_by_email(request, email):
 
 def get_post(request, slug):
     '''get post by username and slug'''
-    post = Post.objects.get(slug=slug)
     try:
+        post = Post.objects.get(slug=slug)
         serialized_post = PostSerializer(post, context={'request': request})
         return Response(serialized_post.data)
 
-    except post.DoesNotExist:
+    except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
