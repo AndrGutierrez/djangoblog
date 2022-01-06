@@ -5,7 +5,8 @@ from djangoblog.views import index
 
 urlpatterns = [
     # API views
-    path('api/users/<int:id>', views.users, name="users"),
+    path('api/users/', views.users, name="users"),
+    path('api/users/<int:id>', views.users, name="single_user"),
     path('api/auth/', views.login_view, name="login"),
     path('api/logout/', views.logout_view, name="logout"),
 

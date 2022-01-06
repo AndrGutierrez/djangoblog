@@ -5,6 +5,8 @@ from rest_framework import status
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from users.models import Profile, User
 from users.serializers import UserSerializer, ProfileSerializer
+from posts.models import Post
+from posts.serializers import PostSerializer
 
 
 class Request:
@@ -44,6 +46,17 @@ def get_user_by_email(request, email):
     user = User.objects.get(email=email)
     serializer = UserSerializer(user, context={'request': request})
     return Response(serializer.data)
+
+
+def get_post(request, slug):
+    '''get post by username and slug'''
+    post = Post.objects.get(slug=slug)
+    try:
+        serialized_post = PostSerializer(post, context={'request': request})
+        return Response(serialized_post.data)
+
+    except post.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 def list_model(request, model_serializer, model, model_name):

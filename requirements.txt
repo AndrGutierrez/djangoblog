@@ -6,3 +6,4 @@ varname
 mysqlclient
 pytz
 pillow
+django-autoslug

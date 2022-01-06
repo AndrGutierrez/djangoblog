@@ -2,12 +2,14 @@
 from django.db import models
 from django.db.models import ForeignKey, CharField, TextField, ImageField, DateTimeField
 from users.models import User
+from autoslug import AutoSlugField
 
 
 class Post(models.Model):
     '''Post model'''
     user = ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = CharField(max_length=255, null=False)
+    slug = AutoSlugField(populate_from='title', unique_with=['created__month'])
     content = TextField(null=True, blank=True)
     thumbnail = ImageField(upload_to='posts/pictures/thumbnail', null=True)
     created = DateTimeField(auto_now_add=True)
