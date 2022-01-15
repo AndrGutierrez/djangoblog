@@ -38,11 +38,11 @@ class Profile(models.Model):
     '''User Profile model'''
     user = OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = ImageField(
-        upload_to='users/pictures/profilepic',
+        upload_to='static/users/profilepic',
         blank=True,
         null=True,
-        default='users/pictures/profilepic/default.jpg')
-    banner = ImageField(upload_to='users/pictures/banner',
+        default='static/users/profilepic/default.jpg')
+    banner = ImageField(upload_to='static/users/banner/banner',
                         blank=True,
                         null=True)
     biography = TextField(blank=True)

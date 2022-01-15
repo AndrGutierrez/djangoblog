@@ -22,7 +22,7 @@ export default function App() {
             component={CreatedAccount}
           />
           <Route exact path="/posts" component={Posts} />
-          <Route exact path="/posts/:username/:title" component={Post} />
+          <Route exact path="/posts/:username/:slug" component={Post} />
         </Layout>
       </Switch>
     </BrowserRouter>

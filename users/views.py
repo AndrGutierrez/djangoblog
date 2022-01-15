@@ -22,8 +22,8 @@ def login_view(request):
     try:
         if request.method == 'GET':
             if not request.user.is_authenticated:
-                return HttpResponse("You are not logged in")
-            response = get_user_by_email(request.user, request)
+                return HttpResponse("You are not logged in", status=401)
+            response = get_user_by_email(request, request.user)
 
         if request.method == 'POST':
             user = authenticate(email=request.data.get('email'),

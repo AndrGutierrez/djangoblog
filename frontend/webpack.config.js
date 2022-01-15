@@ -6,6 +6,7 @@ const WebpackDevServer = require("webpack-dev-server");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
+  devtool: "source-map",
   entry: {
     home: path.resolve(__dirname, "./src/index"),
   },
@@ -17,7 +18,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     port: 3000,
-    hot: true
+    hot: true,
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -72,5 +73,9 @@ module.exports = {
     }),
     new Dotenv(),
     new webpack.HotModuleReplacementPlugin({}),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: path.join(__dirname, "dist", "vendor-manifest.json"),
+    }),
   ],
 };

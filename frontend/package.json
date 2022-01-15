@@ -6,6 +6,7 @@
     "scripts": {
         "build": "webpack --mode production",
         "build:dev": "webpack --mode development",
+        "build:dll": "webpack --config webpack.dll.config",
         "start": "webpack serve --open --mode development"
     },
     "keywords": [],
@@ -16,12 +17,15 @@
         "@emotion/styled": "^11.6.0",
         "@mui/icons-material": "^5.2.1",
         "@mui/material": "^5.2.2",
+        "@reduxjs/toolkit": "^1.7.1",
         "axios": "^0.21.1",
         "axios-progress-bar": "^1.2.0",
         "babel-eslint": "^10.1.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "react-router-dom": "^5.2.0"
+        "react-redux": "^7.2.6",
+        "react-router-dom": "^5.2.0",
+        "redux": "^4.1.2"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",

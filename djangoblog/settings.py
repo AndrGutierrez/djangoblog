@@ -81,7 +81,10 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'dist', 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend', 'dist', 'static'),
+    os.path.join(BASE_DIR, 'media'),
+]
 
 WSGI_APPLICATION = 'djangoblog.wsgi.application'
 
