@@ -11,7 +11,9 @@ class Post(models.Model):
     title = CharField(max_length=255, null=False)
     slug = AutoSlugField(populate_from='title', unique_with=['created__month'])
     content = TextField(null=True, blank=True)
-    thumbnail = ImageField(upload_to='static/posts/thumbnail', null=True)
+    thumbnail = ImageField(upload_to='static/posts/thumbnail',
+                           blank=True,
+                           null=True)
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
 

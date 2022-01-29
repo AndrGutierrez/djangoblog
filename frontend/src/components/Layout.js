@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
-import axios from "axios";
+import { SpeedDialIcon, SpeedDialAction, SpeedDial } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CreateIcon from "@mui/icons-material/Create";
+import { useHistory, useLocation } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -17,16 +19,49 @@ const theme = createTheme({
     },
   },
   typography: {
-    postTitle: {
-      fontFamily: "Luxurious Roman",
-      fontSize: "5rem",
+    postTitle: {},
+  },
+  overrides: {
+    MuiInputBase: {
+      input: {
+        height: "100%",
+      },
     },
   },
 });
 export default function Layout({ children }) {
+  const history = useHistory();
+  const { pathname } = useLocation();
+  const [headerType, setHeaderType] = useState();
+  const POST_PATH = "/posts/create";
+  const actions = [
+    {
+      name: "create",
+      link: POST_PATH,
+      icon: <CreateIcon />,
+    },
+  ];
+
+  useEffect(() => {
+    if (pathname === POST_PATH) setHeaderType("post");
+  });
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header type={headerType} />
+      <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: "absolute", bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            onClick={() => history.push(action.link)}
+          />
+        ))}
+      </SpeedDial>
       {children}
       <Footer />
     </ThemeProvider>

@@ -17,7 +17,6 @@ from .serializers import UserSerializer
 @permission_classes([AllowAny])
 def login_view(request):
     """login view"""
-    response = HttpResponse("logged in successfully", status=200)
 
     try:
         if request.method == 'GET':
@@ -31,6 +30,7 @@ def login_view(request):
 
             if not isinstance(user, AnonymousUser) and user is not None:
                 login(request, user)
+                response = get_user_by_email(request, user)
 
             else:
                 response = HttpResponse("failed to login", status=401)

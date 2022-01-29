@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { login } from "../store/userSlice";
 import {
   Paper,
   Typography,
@@ -7,6 +8,7 @@ import {
   Button,
   Link as MuiLink,
 } from "@mui/material";
+import { connect, useDispatch } from "react-redux";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { emailValidator } from "../utils/validators";
@@ -28,9 +30,10 @@ const FormStyle = {
   padding: "1rem",
 };
 
-export default function Login() {
+function Login({ login }) {
   const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth/`;
   const history = useHistory();
+  const dispatch = useDispatch();
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
@@ -70,7 +73,11 @@ export default function Login() {
         throw e;
       })
 
-      .then(() => history.push("/"));
+      .then((response) => {
+        console.log(response.data);
+        dispatch(login({ user: response.data }));
+        history.push("/");
+      });
   };
 
   return (
@@ -129,3 +136,10 @@ export default function Login() {
     </Grid>
   );
 }
+
+const mapStateToProps = (state) => ({ user: state.user });
+const mapDispatchToProps = {
+  login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

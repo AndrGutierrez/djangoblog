@@ -4,7 +4,7 @@ import Comment from "./Comment";
 
 export default function CommentField({ comments }) {
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} sx={{ py: 2 }}>
       <TextField
         label="Add a public comment"
         variant="standard"

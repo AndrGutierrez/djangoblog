@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Posts from "../pages/Posts";
+import CreatePost from "../pages/CreatePost";
 import Post from "../pages/Post";
 import CreatedAccount from "../pages/CreatedAccount";
 import Layout from "../components/Layout";
@@ -22,7 +23,8 @@ export default function App() {
             component={CreatedAccount}
           />
           <Route exact path="/posts" component={Posts} />
-          <Route exact path="/posts/:username/:slug" component={Post} />
+          <Route exact path="/posts/create" component={CreatePost} />
+          <Route exact path="/posts/:username/:postslug" component={Post} />
         </Layout>
       </Switch>
     </BrowserRouter>

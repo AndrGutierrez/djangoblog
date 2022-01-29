@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { logout, login } from "../store/userSlice";
+
 import {
   AppBar,
   Typography,
@@ -20,23 +21,45 @@ const listStyles = {
   justifyContent: "space-between",
 };
 
-function Header({ user, logout, login }) {
+function Header({ type, user, post, logout, login }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const LOGOUT_ROUTE = `${process.env.API_ROUTE}/api/logout`;
   const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth`;
+  const POST_ROUTE = `${process.env.API_ROUTE}/api/posts/`;
   const [currentUser, setCurrentUser] = useState(user);
+  axios.defaults.xsrfHeaderName = "X-CSRFToken";
+  axios.defaults.xsrfCookieName = "csrftoken";
+  axios.defaults.withCredentials = true;
 
   const handleLogout = () =>
     axios.get(LOGOUT_ROUTE).then(() => {
       setCurrentUser(user);
       logout();
       history.push("/");
-    }, [user]);
+    });
+
+  const handleSubmit = () => {
+    const data = new FormData();
+    Object.keys(post).forEach((key) => {
+      data.append(key, post[key]);
+    });
+
+    console.log(data);
+    axios({
+      method: "post",
+      url: POST_ROUTE,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: data,
+    });
+  };
 
   useEffect(() => {
-    console.log(user);
-    setCurrentUser(user);
+    if (user !== null) {
+      setCurrentUser(user);
+    }
   }, [user]);
 
   useEffect(() => {
@@ -65,7 +88,15 @@ function Header({ user, logout, login }) {
           </List>
         </Box>
         {!currentUser && (
-          <Grid container item spacing={1} xs={7} md={3} xl={4}>
+          <Grid
+            container
+            item
+            sx={{ display: { xs: "none", sm: "flex" } }}
+            spacing={1}
+            sm={5}
+            md={3}
+            lg={4}
+          >
             <Grid item xs={6}>
               <Link to="/login">
                 <Button color="secondary" variant="outlined" fullWidth>
@@ -82,16 +113,22 @@ function Header({ user, logout, login }) {
             </Grid>
           </Grid>
         )}
-        {currentUser && (
-          <Grid item xs={6}>
-            <Button
-              color="secondary"
-              variant="outlined"
-              fullWidth
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+        {currentUser && type === "post" && (
+          <Grid
+            item
+            xs={6}
+            sx={{ justifyContent: "flex-end", display: "flex" }}
+          >
+            <Grid item xs={6}>
+              <Button
+                color="secondary"
+                variant="contained"
+                fullWidth
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </Grid>
           </Grid>
         )}
       </Toolbar>
@@ -101,6 +138,7 @@ function Header({ user, logout, login }) {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  post: state.post,
 });
 const mapDispatchToProps = {
   logout,

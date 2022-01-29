@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans&family=PT+Sans+Narrow&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=PT+Sans&family=PT+Sans+Narrow&display=swap");
-body {
+body,
+html,
+#App {
   margin: 0;
+  height: 100%;
 }
 
 a {

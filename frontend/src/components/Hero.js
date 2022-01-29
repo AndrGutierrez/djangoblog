@@ -7,6 +7,7 @@ const heroStyles = {
   ["@media (max-width:768px)"]: {
     bgcolor: "primary.main",
   },
+  bgcolor: "primary.main",
 };
 export default function Hero() {
   return (

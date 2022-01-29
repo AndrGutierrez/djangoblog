@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/comments/', views.comments, name='comments'),
     # frontend urls
     path('posts/', index),
+    path('posts/create', index),
     path('posts/<slug:username>/<slug:post_title>/', index)
 ]

@@ -37,14 +37,11 @@ class User(AbstractUser):
 class Profile(models.Model):
     '''User Profile model'''
     user = OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = ImageField(
-        upload_to='static/users/profilepic',
-        blank=True,
-        null=True,
-        default='static/users/profilepic/default.jpg')
-    banner = ImageField(upload_to='static/users/banner/banner',
-                        blank=True,
-                        null=True)
+    profile_picture = ImageField(upload_to='static/users/profilepic',
+                                 blank=True,
+                                 null=True,
+                                 default='static/users/profilepic/default.jpg')
+    banner = ImageField(upload_to='static/users/banner', blank=True, null=True)
     biography = TextField(blank=True)
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
