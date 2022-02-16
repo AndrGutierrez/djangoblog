@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.http import HttpResponse
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import login, logout, authenticate
-from varname import nameof
 from users.models import User
 from utils.api import store_user, list_model, get_user_by_email, get_model_by_pk
 from .serializers import UserSerializer
@@ -46,7 +45,7 @@ def login_view(request):
 @ensure_csrf_cookie
 def users(request, id=None):
     '''store or list users'''
-    model_name = nameof(User)
+    model_name = 'user'
     if request.method == 'POST':
         response = store_user(request)
     if request.method == 'GET':

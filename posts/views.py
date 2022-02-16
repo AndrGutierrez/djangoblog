@@ -4,7 +4,6 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from utils.api import store_model, list_model, get_post, delete_model
 from .serializers import PostSerializer, CommentSerializer
 from .models import Post, Comment
-from varname import nameof
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -12,7 +11,7 @@ from varname import nameof
 @ensure_csrf_cookie
 def posts(request, slug=None):
     '''list and create posts'''
-    model_name = nameof(Post)
+    model_name = 'post'
     if request.method == 'POST':
         response = store_model(request, PostSerializer)
     elif request.method == 'GET':
