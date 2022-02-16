@@ -9,13 +9,8 @@ from posts.models import Post
 from posts.serializers import PostSerializer
 
 
-class Request:
-    """creates a fake request just for not doing weird stuff in store_model"""
-    def __init__(self, data):
-        self.data = data
-
-
 def store_user(request):
+    """store user model only"""
     email = request.data['email']
     password = request.data['password']
     password_confirmation = request.data['password_confirmation']
@@ -112,18 +107,9 @@ def store_model(request, model_serializer):
     return response
 
 
-def get_model(request, model, model_serializer, pk):
-    """
-    Retrieve a model by id/pk
-    """
-    model = get_model_by_pk(model, pk)
-    serializer = model_serializer(model, context={'request': request})
-    return Response(serializer.data)
-
-
 def delete_model(model, pk):
     """Deletes the model by the id/pk"""
-    model = get_model_by_pk(model, pk)
+    model = model.objects.get(id=pk)
     model.delete()
     response = Response(status=status.HTTP_204_NO_CONTENT)
     return response
@@ -131,7 +117,7 @@ def delete_model(model, pk):
 
 def update_model(request, model, model_serializer, pk):
     """update model by id/pk"""
-    model = get_model_by_pk(model, pk)
+    model = model.objects.get(id=pk)
     serializer = model_serializer(model,
                                   data=request.data,
                                   context={'request': request})

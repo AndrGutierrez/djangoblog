@@ -8,6 +8,7 @@ import CreatePost from "../pages/CreatePost";
 import Post from "../pages/Post";
 import CreatedAccount from "../pages/CreatedAccount";
 import Layout from "../components/Layout";
+import Profile from "../pages/Profile"
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             path="/signup/success/:username"
             component={CreatedAccount}
           />
+          <Route exact path="/user/profile" component={Profile} />
           <Route exact path="/posts" component={Posts} />
           <Route exact path="/posts/create" component={CreatePost} />
           <Route exact path="/posts/:username/:postslug" component={Post} />

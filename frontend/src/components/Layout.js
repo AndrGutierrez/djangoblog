@@ -19,7 +19,10 @@ const theme = createTheme({
     },
   },
   typography: {
-    postTitle: {},
+    date: {
+      fontSize: "10",
+      color: "#bdbdbd",
+    },
   },
   overrides: {
     MuiInputBase: {
@@ -29,6 +32,7 @@ const theme = createTheme({
     },
   },
 });
+
 export default function Layout({ children }) {
   const history = useHistory();
   const { pathname } = useLocation();
@@ -45,6 +49,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     if (pathname === POST_PATH) setHeaderType("post");
   });
+
   return (
     <ThemeProvider theme={theme}>
       <Header type={headerType} />

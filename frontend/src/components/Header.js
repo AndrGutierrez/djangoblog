@@ -45,7 +45,6 @@ function Header({ type, user, post, logout, login }) {
       data.append(key, post[key]);
     });
 
-    console.log(data);
     axios({
       method: "post",
       url: POST_ROUTE,
@@ -57,14 +56,12 @@ function Header({ type, user, post, logout, login }) {
   };
 
   useEffect(() => {
-    if (user !== null) {
-      setCurrentUser(user);
-    }
+    if (user !== null) setCurrentUser(user);
   }, [user]);
 
   useEffect(() => {
     axios
-      .get(LOGIN_ROUTE, { withCredentials: true })
+      .get(LOGIN_ROUTE)
       .then((response) => dispatch(login({ user: response.data })));
   }, []);
   return (

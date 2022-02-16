@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, Grid, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const heroStyles = {
@@ -8,12 +8,14 @@ const heroStyles = {
     bgcolor: "primary.main",
   },
   bgcolor: "primary.main",
+  display: "flex",
+  justifyContent: "space-between",
 };
 export default function Hero() {
   return (
-    <div className="hero-container">
-      <Box className="hero" sx={heroStyles}>
-        <Box className="hero-content">
+    <Grid container item xs={12} className="hero-container">
+      <Grid className="hero" container sx={heroStyles}>
+        <Grid className="hero-content" item md={5}>
           <Typography
             variant="h3"
             className="hero__title page_title"
@@ -33,9 +35,18 @@ export default function Hero() {
               Let's start
             </Button>
           </Link>
-        </Box>
-        <div className="hero-image"></div>
-      </Box>
-    </div>
+        </Grid>
+        <Grid md={6}>
+          <Paper sx={{ height: "100%", display: "flex", alignItems: "center" }}>
+            <Box
+              className="hero-image"
+              component="img"
+              src="https://images3.alphacoders.com/836/thumb-1920-836705.jpg"
+              sx={{ width: "200px", marginLeft: "-50px", borderRadius: 2 }}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }

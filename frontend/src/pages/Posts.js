@@ -15,8 +15,17 @@ export default function Posts() {
   useEffect(() => {}, [posts]);
 
   return (
-    <Grid item xs={6}>
-      <Grid container spacing={2} sx={{ marginTop: "10px" }}>
+    <Grid item container xs={12} justifyContent="center" direction="column">
+      <Grid
+        container
+        item
+        spacing={2}
+        sx={{
+          marginTop: "10px",
+          p: 3,
+          px: 9,
+        }}
+      >
         {posts.map((post) => (
           <PostCard post={post} key={`${post.title}-${post.id}`}></PostCard>
         ))}

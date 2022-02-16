@@ -74,7 +74,6 @@ function Login({ login }) {
       })
 
       .then((response) => {
-        console.log(response.data);
         dispatch(login({ user: response.data }));
         history.push("/");
       });

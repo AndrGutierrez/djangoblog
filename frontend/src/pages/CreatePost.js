@@ -25,7 +25,7 @@ function CreatedPost(props) {
     const thumbnail = e.target.files[0];
     setValues({ ...values, thumbnail });
   };
-  const handleSubmit = () => {};
+
   useEffect(() => {
     if (user) {
       const submitData = {
@@ -38,7 +38,7 @@ function CreatedPost(props) {
   return (
     <>
       {user && (
-        <form onSubmit={handleSubmit}>
+        <form>
           <Grid sx={{ display: "flex" }}>
             <Grid
               container

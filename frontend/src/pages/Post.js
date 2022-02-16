@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getModel } from "../utils/ApiUtils";
 import { Typography, Grid, Avatar, Box } from "@mui/material";
 import CommentBox from "../components/CommentBox";
 
 const centerVertically = { display: "flex", alignItems: "center" };
-export default function Post({ props }) {
-  const { pathname } = useLocation();
-  const { postSlug } = props.match.params;
+export default function Post() {
+  const { postslug } = useParams();
   const POST_PATH = `${process.env.API_ROUTE}/api/posts`;
   const USER_PATH = `${process.env.API_ROUTE}/api/users`;
   const formatDate = (date) => {
@@ -20,7 +19,7 @@ export default function Post({ props }) {
   const [profilePicture, setProfilePicture] = useState("");
 
   useEffect(async () => {
-    setPost(await getModel(POST_PATH, postSlug));
+    setPost(await getModel(POST_PATH, postslug));
   }, []);
 
   useEffect(async () => {
@@ -50,11 +49,7 @@ export default function Post({ props }) {
                 </Typography>
               </Grid>
               <Grid item sx={centerVertically}>
-                <Typography
-                  sx={{
-                    color: "#bdbdbd",
-                  }}
-                >
+                <Typography variant="date">
                   {formatDate(post.created)}
                 </Typography>
               </Grid>
@@ -63,7 +58,10 @@ export default function Post({ props }) {
         )}
         <Grid item container xs={12} sx={{ p: 2 }}>
           <Grid item xs={12}>
-            <Typography variant="h2" sx={{ fontFamily: "Luxurious Roman" }}>
+            <Typography
+              variant="h2"
+              sx={{ fontFamily: "Luxurious Roman", fontSize: "3rem" }}
+            >
               {post.title}
             </Typography>
           </Grid>
@@ -71,7 +69,7 @@ export default function Post({ props }) {
             <Typography>{post.content}</Typography>
           </Grid>
         </Grid>
-        <CommentBox comments={post.comments} />
+        <CommentBox post={post} comments={post.comments} />
       </Grid>
     </Grid>
   );

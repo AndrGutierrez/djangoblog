@@ -13,4 +13,5 @@ urlpatterns = [
     # FRONTEND views
     path('login/', index),
     path('signup/', index),
+    path('user/profile/', index),
 ]
