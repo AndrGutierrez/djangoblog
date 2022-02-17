@@ -12,8 +12,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "../static"),
-    filename: "static/js/bundle.js",
-    publicPath: "/",
+    filename: "js/bundle.js",
+    publicPath: "/static",
   },
   devServer: {
     historyApiFallback: true,
@@ -69,13 +69,13 @@ module.exports = {
       filename: "index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: "static/css/[name].css",
+      filename: "css/[name].css",
     }),
     new Dotenv(),
     new webpack.HotModuleReplacementPlugin({}),
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: path.join(__dirname, "dist", "vendor-manifest.json"),
+      manifest: path.join(__dirname, "../static", "vendor-manifest.json"),
     }),
   ],
 };

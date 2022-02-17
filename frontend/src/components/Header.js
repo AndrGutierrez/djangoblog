@@ -16,6 +16,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 const listStyles = {
   display: "flex",
   justifyContent: "space-between",
@@ -52,7 +53,14 @@ function Header({ type, user, post, logout, login }) {
         "Content-Type": "multipart/form-data",
       },
       data: data,
-    });
+    })
+      .catch((e) => {
+        throw e;
+      })
+      .then((response) => {
+        console.log("++++", response);
+        history.push("/");
+      });
   };
 
   useEffect(() => {

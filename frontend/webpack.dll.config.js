@@ -24,7 +24,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DllPlugin({
-      path: path.join(__dirname, "dist", "[name]-manifest.json"),
+      path: path.join(__dirname, "../static", "[name]-manifest.json"),
       name: "[name]_dll",
       context: path.resolve(__dirname, "src", "app"),
     }),

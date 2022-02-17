@@ -6,4 +6,5 @@ frontend/dist/
 dist/
 build_dll/
 build_client/
-static/
+static/*
+!static/.keep

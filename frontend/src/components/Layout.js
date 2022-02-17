@@ -47,8 +47,9 @@ export default function Layout({ children }) {
   ];
 
   useEffect(() => {
-    if (pathname === POST_PATH) setHeaderType("post");
-  });
+    console.log(pathname);
+    pathname === POST_PATH ? setHeaderType("post") : setHeaderType("home");
+  }, [pathname]);
 
   return (
     <ThemeProvider theme={theme}>

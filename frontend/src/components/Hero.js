@@ -36,7 +36,7 @@ export default function Hero() {
             </Button>
           </Link>
         </Grid>
-        <Grid md={6}>
+        <Grid item md={6}>
           <Paper sx={{ height: "100%", display: "flex", alignItems: "center" }}>
             <Box
               className="hero-image"

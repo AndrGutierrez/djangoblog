@@ -23,8 +23,10 @@ export default function Posts() {
         sx={{
           marginTop: "10px",
           p: 3,
-          px: 9,
         }}
+        xs={12}
+        sm={11}
+        md={10}
       >
         {posts.map((post) => (
           <PostCard post={post} key={`${post.title}-${post.id}`}></PostCard>
