@@ -7,4 +7,6 @@ dist/
 build_dll/
 build_client/
 static/*
+staticfiles/*
 !static/.keep
+!staticfiles/.keep
