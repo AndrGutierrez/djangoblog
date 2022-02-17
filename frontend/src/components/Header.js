@@ -83,7 +83,7 @@ function Header({ type, user, post, logout, login }) {
           className="link"
           sx={{ fontFamily: "PT Sans Narrow" }}
         >
-          Djangoblogadasd
+          Djangoblog
         </Typography>
         <Box display={{ xs: "none", lg: "block" }}>
           <List className="">

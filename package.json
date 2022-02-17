@@ -1,4 +1,7 @@
 {
+    "engines": {
+        "node": ">=17.3.0"
+    },
     "name": "frontend",
     "version": "1.0.0",
     "description": "frontend for djangoblog made with react",
