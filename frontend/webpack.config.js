@@ -11,7 +11,7 @@ module.exports = {
     home: path.resolve(__dirname, "./src/index"),
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "../static"),
     filename: "static/js/bundle.js",
     publicPath: "/",
   },

@@ -28,11 +28,11 @@ HOST = os.environ.get("DATABASE_HOST")
 NAME = os.environ.get("DATABASE_NAME")
 USER = os.environ.get("DATABASE_USER")
 ROOT_PASSWORD = os.environ.get("DATABASE_ROOT_PASSWORD")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lj*ov0b$*ip@h5-8%&hhyni%=a_rw=j1hzohj3*vn@=%)!g2#+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
@@ -68,7 +68,7 @@ ROOT_URLCONF = 'djangoblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'dist')],
+        'DIRS': [os.path.join(BASE_DIR, 'static')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +82,6 @@ TEMPLATES = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend', 'dist', 'static'),
     os.path.join(BASE_DIR, 'static'),
 ]
 

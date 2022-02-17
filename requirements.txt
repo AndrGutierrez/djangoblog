@@ -6,3 +6,4 @@ mysqlclient
 pytz
 pillow
 django-autoslug
+gunicorn

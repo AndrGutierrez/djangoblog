@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import index
+from djangoblog.views import index
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', index),
     path('', include(('users.urls', 'users'), namespace='users')),
     path('', include(('posts.urls', 'posts'), namespace='posts')),
-    path('', index),
 ]
+urlpatterns += staticfiles_urlpatterns()
