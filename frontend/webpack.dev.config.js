@@ -73,6 +73,9 @@ module.exports = {
     }),
     new Dotenv(),
     new webpack.HotModuleReplacementPlugin({}),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: path.join(__dirname, "../static", "vendor-manifest.json"),
+    }),
   ],
 };
-

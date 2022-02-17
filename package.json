@@ -8,7 +8,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack --mode production --config frontend/webpack.config.js",
-        "build:dev": "webpack --mode development --config frontend/webpack.config.js",
+        "build:dev": "webpack --mode development --config frontend/webpack.dev.config.js",
         "build:dll": "webpack --config frontend/webpack.dll.config"
     },
     "keywords": [],
