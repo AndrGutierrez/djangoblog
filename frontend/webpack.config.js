@@ -71,7 +71,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
     }),
-    new Dotenv(),
+    new Dotenv({
+      path: path.resolve(__dirname,'../.env')
+    }),
     new webpack.HotModuleReplacementPlugin({}),
   ],
 };
