@@ -12,6 +12,7 @@ import {
   Button,
   Grid,
   Box,
+  Avatar,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -58,7 +59,6 @@ function Header({ type, user, post, logout, login }) {
         throw e;
       })
       .then((response) => {
-        console.log("++++", response);
         history.push("/");
       });
   };
@@ -75,67 +75,90 @@ function Header({ type, user, post, logout, login }) {
   return (
     <AppBar position="static" color="primary">
       <Toolbar variant="dense" className="" sx={listStyles}>
-        <Typography
-          className=""
-          variant="h5"
-          component={Link}
-          to="/"
-          className="link"
-          sx={{ fontFamily: "PT Sans Narrow" }}
+        <Grid
+          container
+          sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          Djangoblog
-        </Typography>
-        <Box display={{ xs: "none", lg: "block" }}>
-          <List className="">
-            <ListItem component={Link} to="/">
-              <ListItemText primary="Home" />
-            </ListItem>
-          </List>
-        </Box>
-        {!currentUser && (
+          <ListItem item md={6} lg={8} xl={9} component={Grid}>
+            <Typography
+              component={Link}
+              to="/"
+              variant="h5"
+              sx={{ fontFamily: "PT Sans Narrow", height: "100%" }}
+            >
+              Djangoblog
+            </Typography>
+          </ListItem>
+
           <Grid
+            display={{ xs: "none", md: "flex" }}
             container
             item
-            sx={{ display: { xs: "none", sm: "flex" } }}
-            spacing={1}
-            sm={5}
-            md={3}
+            md={6}
             lg={4}
           >
-            <Grid item xs={6}>
-              <Link to="/login">
-                <Button color="secondary" variant="outlined" fullWidth>
-                  Login
-                </Button>
+            <ListItem component={Grid} item md={3} lg={2} xl={1}>
+              <Link to="/">
+                <ListItemText primary="Home" />
               </Link>
-            </Grid>
-            <Grid item xs={6}>
-              <Link to="/signup">
-                <Button color="secondary" variant="contained" fullWidth>
-                  Sign up
-                </Button>
-              </Link>
-            </Grid>
-          </Grid>
-        )}
-        {currentUser && type === "post" && (
-          <Grid
-            item
-            xs={6}
-            sx={{ justifyContent: "flex-end", display: "flex" }}
-          >
-            <Grid item xs={6}>
-              <Button
-                color="secondary"
-                variant="contained"
-                fullWidth
-                onClick={handleSubmit}
+            </ListItem>
+            {currentUser ? (
+              <ListItem component={Grid} container item md={4} xl={3}>
+                <Grid item>
+                  <Link to="/user/profile">
+                    <Avatar
+                      src={`${
+                        user.profile ? user.profile.profile_picture : ""
+                      }`}
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link to="/user/profile">
+                    <ListItemText primary={`${user.username}`} />
+                  </Link>
+                </Grid>
+              </ListItem>
+            ) : (
+              <ListItem component={Grid} container item md={8} spacing={2}>
+                <Grid item xs={6}>
+                  <Link to="/login">
+                    <Button color="secondary" variant="outlined" fullWidth>
+                      Login
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item xs={6}>
+                  <Link to="/signup">
+                    <Button color="secondary" variant="contained" fullWidth>
+                      Sign up
+                    </Button>
+                  </Link>
+                </Grid>
+              </ListItem>
+            )}
+            {currentUser && type === "post" && (
+              <ListItem
+                component={Grid}
+                xs={6}
+                md={5}
+                lg={6}
+                item
+                sx={{ justifyContent: "flex-end", display: "flex" }}
               >
-                Submit
-              </Button>
-            </Grid>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  fullWidth
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </ListItem>
+            )}
           </Grid>
-        )}
+        </Grid>
       </Toolbar>
     </AppBar>
   );

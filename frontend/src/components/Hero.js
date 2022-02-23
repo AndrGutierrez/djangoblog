@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Box, Button, Grid, Paper } from "@mui/material";
+import { Typography, Box, Button, Grid, Paper, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const heroStyles = {
@@ -37,13 +37,33 @@ export default function Hero() {
           </Link>
         </Grid>
         <Grid item md={6}>
-          <Paper sx={{ height: "100%", display: "flex", alignItems: "center" }}>
+          <Paper
+            sx={{
+              height: "100%",
+              alignItems: "center",
+              display: { xs: "none", md: "flex" },
+            }}
+          >
             <Box
               className="hero-image"
               component="img"
               src="https://images3.alphacoders.com/836/thumb-1920-836705.jpg"
               sx={{ width: "200px", marginLeft: "-50px", borderRadius: 2 }}
             />
+            <Grid sx={{ height: "100%", padding: 2 }} md={10}>
+              <Typography
+                variant="h4"
+                sx={{ fontFamily: "Luxurious Roman", pb: 2 }}
+              >
+                Express yourself
+              </Typography>
+              <Skeleton animation={false} width={"70%"} />
+              <Skeleton animation={false} />
+              <Skeleton animation={false} width={"65%"} />
+              <Skeleton animation={false} width={"90%"} />
+              <Skeleton animation={false} width={"85%"} />
+              <Skeleton animation={false} />
+            </Grid>
           </Paper>
         </Grid>
       </Grid>

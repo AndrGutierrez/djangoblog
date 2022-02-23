@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Grid, Paper, Avatar, Typography } from "@mui/material";
+import { Grid, Paper, Avatar, Typography, Box } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 
@@ -44,14 +44,23 @@ function Profile({ user }) {
   };
 
   return (
-    <Paper>
-      <Grid container>
+    <Box display="flex" justifyContent="center">
+      <Paper
+        component={Grid}
+        item
+        xs={12}
+        sm={10}
+        md={8}
+        lg={7}
+        container
+        spacing={2}
+      >
         <Grid
+          sx={{ display: "flex" }}
+          justifyContent={{ xs: "center", sm: "flex-start" }}
           item
           xs={12}
-          sm={10}
-          md={8}
-          sx={{ display: "flex", justifyContent: "center" }}
+          md={4}
         >
           <Grid sx={{ position: "relative" }}>
             <Avatar
@@ -62,7 +71,7 @@ function Profile({ user }) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} md={8}>
           <Typography variant="h4" align="center">
             {currentUser.username}
           </Typography>
@@ -76,8 +85,8 @@ function Profile({ user }) {
             </Typography>
           )}
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </Box>
   );
 }
 
