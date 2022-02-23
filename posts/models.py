@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models import ForeignKey, CharField, TextField, ImageField, DateTimeField
 from users.models import User
 from autoslug import AutoSlugField
+from cloudinary.models import CloudinaryField
+
 
 
 class Post(models.Model):
@@ -11,9 +13,8 @@ class Post(models.Model):
     title = CharField(max_length=255, null=False)
     slug = AutoSlugField(populate_from='title', unique_with=['created__month'])
     content = TextField(null=True, blank=True)
-    thumbnail = ImageField(upload_to='static/posts/thumbnail',
-                           blank=True,
-                           null=True)
+    thumbnail = CloudinaryField('image')
+
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
 

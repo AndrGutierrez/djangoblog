@@ -22,6 +22,7 @@ load_dotenv()
 AUTH_USER_MODEL = 'users.User'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import cloudinary
 
 PORT = os.environ.get("DATABASE_PORT")
 HOST = os.environ.get("DATABASE_HOST")
@@ -29,6 +30,10 @@ NAME = os.environ.get("DATABASE_NAME")
 USER = os.environ.get("DATABASE_USER")
 ROOT_PASSWORD = os.environ.get("DATABASE_ROOT_PASSWORD")
 SECRET_KEY = os.environ.get("SECRET_KEY")
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+cloudinary.config(cloud_name=os.environ.get("CLOUD_NAME"),
+                  api_key=os.environ.get("CLOUDINARY_API_KEY"),
+                  api_secret=os.environ.get("CLOUDINARY_API_SECRET"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -37,9 +42,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = [
-"localhost",
-"app-djangoblog.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "app-djangoblog.herokuapp.com"]
 
 # Application definition
 
@@ -52,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-CUSTOM_APPS = ['rest_framework', 'users', 'posts']
+CUSTOM_APPS = ['rest_framework', 'users', 'posts', 'cloudinary']
 
 INSTALLED_APPS += CUSTOM_APPS
 MIDDLEWARE = [

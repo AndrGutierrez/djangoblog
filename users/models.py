@@ -7,6 +7,7 @@ from .managers import CustomUserManager
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from cloudinary.models import CloudinaryField
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -37,11 +38,8 @@ class User(AbstractUser):
 class Profile(models.Model):
     '''User Profile model'''
     user = OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = ImageField(upload_to='static/users/profilepic',
-                                 blank=True,
-                                 null=True,
-                                 default='static/users/profilepic/default.jpg')
-    banner = ImageField(upload_to='static/users/banner', blank=True, null=True)
+    profile_picture = CloudinaryField("image")
+    banner = CloudinaryField("image")
     biography = TextField(blank=True)
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)

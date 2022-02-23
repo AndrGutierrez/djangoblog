@@ -8,3 +8,4 @@ pillow
 django-autoslug
 gunicorn
 whitenoise
+cloudinary

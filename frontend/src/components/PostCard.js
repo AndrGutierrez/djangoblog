@@ -28,6 +28,7 @@ const imageStyles = {
 export default function PostCard({ post }) {
   const [user, setUser] = useState({});
   const [styles, setStyles] = useState(imageStyles);
+  const [postThumbnail, setPostThumbnail] = useState("");
   const USER_PATH = `${process.env.API_ROUTE}/api/users`;
   const created = new Date(post.created).toLocaleDateString();
   const generateRandomColor = () =>
@@ -36,6 +37,9 @@ export default function PostCard({ post }) {
     setUser(await getModel(USER_PATH, post.user));
     setStyles({ ...styles, backgroundColor: generateRandomColor() });
   }, []);
+  useEffect(() => {
+    setPostThumbnail(`${process.env.CDN_URL}/${post.thumbnail}`);
+  }, [user]);
 
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
@@ -45,7 +49,7 @@ export default function PostCard({ post }) {
             <CardMedia
               component={"img"}
               sx={styles}
-              src={post.thumbnail}
+              src={postThumbnail}
             ></CardMedia>
           )}
           {!post.thumbnail && <Box sx={styles}></Box>}
