@@ -1,5 +1,6 @@
 '''Post and Comments views'''
 from rest_framework.decorators import api_view
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from utils.api import store_model, list_model, get_post, delete_model
 from .serializers import PostSerializer, CommentSerializer
@@ -19,7 +20,7 @@ def posts(request, slug=None):
         post = get_post(request, slug)
         response = post if slug is not None else list_posts
     elif request.method == 'DELETE':
-        delete_model(request, request.data['id'])
+        response = delete_model(Post, request.data['id'])
 
     return response
 
@@ -27,6 +28,7 @@ def posts(request, slug=None):
 @api_view(['POST'])
 @csrf_protect
 @ensure_csrf_cookie
+@login_required
 def comments(request):
     '''list and create comments'''
     if request.method == 'POST':

@@ -109,9 +109,16 @@ def store_model(request, model_serializer):
 
 def delete_model(model, pk):
     """Deletes the model by the id/pk"""
-    model = model.objects.get(id=pk)
-    model.delete()
-    response = Response(status=status.HTTP_204_NO_CONTENT)
+
+    try:
+        model = model.objects.get(id=pk)
+        model.delete()
+        response = Response("Error 404 not found",
+                            status=status.HTTP_404_NOT_FOUND)
+    except model.DoesNotExist:
+        response = Response("item deleted successfuly",
+                            status=status.HTTP_204_NO_CONTENT)
+
     return response
 
 

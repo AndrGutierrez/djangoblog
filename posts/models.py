@@ -6,14 +6,13 @@ from autoslug import AutoSlugField
 from cloudinary.models import CloudinaryField
 
 
-
 class Post(models.Model):
     '''Post model'''
     user = ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = CharField(max_length=255, null=False)
     slug = AutoSlugField(populate_from='title', unique_with=['created__month'])
     content = TextField(null=True, blank=True)
-    thumbnail = CloudinaryField('image')
+    thumbnail = CloudinaryField('image', blank=True, null=True)
 
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
