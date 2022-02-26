@@ -47,7 +47,6 @@ export default function Layout({ children }) {
   ];
 
   useEffect(() => {
-    console.log(pathname);
     pathname === POST_PATH ? setHeaderType("post") : setHeaderType("home");
   }, [pathname]);
 

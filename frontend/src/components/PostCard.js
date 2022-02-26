@@ -124,7 +124,7 @@ export default function PostCard({ post, handleOpenModal }) {
           </Typography>
           <Grid sx={{ display: "flex" }}>
             <Avatar
-              src={`${user.profile ? user.profile.profile_picture : ""}`}
+              src={`${user ? user.profile_picture : ""}`}
               sx={{ width: 24, height: 24 }}
             />
             <Grid container sx={{ px: 1 }}>

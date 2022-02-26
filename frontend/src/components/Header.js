@@ -33,6 +33,7 @@ function Header({ type, user, post, logout, login }) {
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
+  const fakeUser = { data: null };
 
   const handleLogout = () =>
     axios.get(LOGOUT_ROUTE).then(() => {
@@ -58,19 +59,16 @@ function Header({ type, user, post, logout, login }) {
       .catch((e) => {
         throw e;
       })
-      .then((response) => {
-        history.push("/");
-      });
+      .then(() => history.push("/"));
   };
 
-  useEffect(() => {
-    if (user !== null) setCurrentUser(user);
-  }, [user]);
+  useEffect(() => user !== null && setCurrentUser(user), [user]);
 
   useEffect(() => {
     axios
       .get(LOGIN_ROUTE)
-      .then((response) => dispatch(login({ user: response.data })));
+      .catch(() => fakeUser)
+      .then(({ data }) => dispatch(login({ user: data })));
   }, []);
   return (
     <AppBar position="static" color="primary">

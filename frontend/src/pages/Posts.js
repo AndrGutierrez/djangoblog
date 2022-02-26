@@ -40,9 +40,7 @@ export default function Posts() {
   };
 
   const handleDelete = () => {
-    deleteModel(POSTS_ROUTE, item.id).then((response) =>
-      setDeletedItem({ id: item.id })
-    );
+    deleteModel(POSTS_ROUTE, item.id).then(() => setDeletedItem({}));
     handleCloseModal();
   };
 

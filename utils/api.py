@@ -33,7 +33,8 @@ def get_model_by_pk(request, serializer, model, pk):
         return Response(serialized_model.data)
 
     except model.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response("error 404 not found",
+                        status=status.HTTP_404_NOT_FOUND)
 
 
 def get_user_by_email(request, email):
@@ -113,11 +114,11 @@ def delete_model(model, pk):
     try:
         model = model.objects.get(id=pk)
         model.delete()
-        response = Response("Error 404 not found",
-                            status=status.HTTP_404_NOT_FOUND)
-    except model.DoesNotExist:
         response = Response("item deleted successfuly",
                             status=status.HTTP_204_NO_CONTENT)
+    except model.DoesNotExist:
+        response = Response("Error 404 not found",
+                            status=status.HTTP_404_NOT_FOUND)
 
     return response
 

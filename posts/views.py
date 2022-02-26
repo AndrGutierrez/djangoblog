@@ -13,14 +13,15 @@ from .models import Post, Comment
 def posts(request, slug=None):
     '''list and create posts'''
     model_name = 'post'
+    print("####")
     if request.method == 'POST':
         response = store_model(request, PostSerializer)
+    elif request.method == 'DELETE':
+        response = delete_model(Post, request.data['id'])
     elif request.method == 'GET':
         list_posts = list_model(request, PostSerializer, Post, model_name)
         post = get_post(request, slug)
         response = post if slug is not None else list_posts
-    elif request.method == 'DELETE':
-        response = delete_model(Post, request.data['id'])
 
     return response
 
