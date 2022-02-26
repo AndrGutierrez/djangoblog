@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { logout, login } from "../store/userSlice";
+import { createWithMedia } from "../utils/ApiUtils";
 
 import {
   AppBar,
@@ -48,14 +49,7 @@ function Header({ type, user, post, logout, login }) {
       data.append(key, post[key]);
     });
 
-    axios({
-      method: "post",
-      url: POST_ROUTE,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: data,
-    })
+    createWithMedia(POST_ROUTE, data)
       .catch((e) => {
         throw e;
       })

@@ -117,7 +117,7 @@ def delete_model(model, pk):
         response = Response("item deleted successfuly",
                             status=status.HTTP_204_NO_CONTENT)
     except model.DoesNotExist:
-        response = Response("Error 404 not found",
+        response = Response("Error 404, item not found",
                             status=status.HTTP_404_NOT_FOUND)
 
     return response

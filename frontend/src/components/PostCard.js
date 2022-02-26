@@ -56,96 +56,102 @@ export default function PostCard({ post, handleOpenModal }) {
   }, [user]);
 
   const handleClick = (event) => {
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
     setOpenedMenu(true);
   };
 
-  const handleClose = (action) => {
+  const handleClose = () => {
     setAnchorEl(null);
     setOpenedMenu(false);
+  };
+  const handleAction = (event, action) => {
+    event.preventDefault();
+    handleClose();
     action();
   };
 
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
-      {/* <Link to={`/posts/${user.username}/${post.slug}`}> */}
-      <Card>
-        {post.thumbnail && (
-          <CardMedia
-            component={"img"}
-            sx={styles}
-            src={postThumbnail}
-          ></CardMedia>
-        )}
-        {!post.thumbnail && <Box sx={styles}></Box>}
+      <Link to={`/posts/${user.username}/${post.slug}`}>
+        <Card>
+          {post.thumbnail && (
+            <CardMedia
+              component={"img"}
+              sx={styles}
+              src={postThumbnail}
+            ></CardMedia>
+          )}
+          {!post.thumbnail && <Box sx={styles}></Box>}
 
-        <CardContent sx={{ position: "relative" }}>
-          <Box sx={{ position: "absolute", right: 5, top: 5 }}>
-            <IconButton onClick={handleClick}>
-              <MoreVertIcon color="action" fontSize="small" />
-            </IconButton>
-            <Menu
-              id="long-menu"
-              open={openedMenu}
-              onClose={handleClose}
-              anchorEl={anchorEl}
-              PaperProps={{
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: "20ch",
-                },
-              }}
-              MenuListProps={{
-                "aria-labelledby": "long-button",
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              {options.map((option) => (
-                <MenuItem
-                  key={option.name}
-                  onClick={() => handleClose(option.action)}
+          <CardContent sx={{ position: "relative" }}>
+            <Box sx={{ position: "absolute", right: 5, top: 5 }}>
+              <IconButton onClick={handleClick}>
+                <MoreVertIcon color="action" fontSize="small" />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                open={openedMenu}
+                onClose={() => handleClose()}
+                onClick={(e) => e.preventDefault()}
+                anchorEl={anchorEl}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "20ch",
+                  },
+                }}
+                MenuListProps={{
+                  "aria-labelledby": "long-button",
+                }}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                {options.map((option) => (
+                  <MenuItem
+                    key={option.name}
+                    onClick={(e) => handleAction(e, option.action)}
+                  >
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography variant="h6">{post.title}</Typography>
+
+            <Typography variant="body2" color="text.secondary">
+              {post.content ? post.content.substring(0, 150) : ""}
+            </Typography>
+            <Grid sx={{ display: "flex" }}>
+              <Avatar
+                src={`${user ? user.profile_picture : ""}`}
+                sx={{ width: 24, height: 24 }}
+              />
+              <Grid container sx={{ px: 1 }}>
+                <Typography
+                  variant="caption"
+                  sx={{ width: "100%", fontWeight: 500 }}
                 >
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography variant="h6">{post.title}</Typography>
-
-          <Typography variant="body2" color="text.secondary">
-            {post.content ? post.content.substring(0, 150) : ""}
-          </Typography>
-          <Grid sx={{ display: "flex" }}>
-            <Avatar
-              src={`${user ? user.profile_picture : ""}`}
-              sx={{ width: 24, height: 24 }}
-            />
-            <Grid container sx={{ px: 1 }}>
-              <Typography
-                variant="caption"
-                sx={{ width: "100%", fontWeight: 500 }}
-              >
-                {user.username}
-              </Typography>
-              <Typography
-                variant="caption"
-                color="text.disabled"
-                sx={{ width: "100%" }}
-              >
-                {created}
-              </Typography>
+                  {user.username}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="text.disabled"
+                  sx={{ width: "100%" }}
+                >
+                  {created}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      {/* </Link> */}
+          </CardContent>
+        </Card>
+      </Link>
     </Grid>
   );
 }
