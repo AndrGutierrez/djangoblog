@@ -50,7 +50,7 @@ export default function Hero() {
               src="https://images3.alphacoders.com/836/thumb-1920-836705.jpg"
               sx={{ width: "200px", marginLeft: "-50px", borderRadius: 2 }}
             />
-            <Grid sx={{ height: "100%", padding: 2 }} md={10}>
+            <Grid sx={{ height: "100%", padding: 2 }} item md={10}>
               <Typography
                 variant="h4"
                 sx={{ fontFamily: "Luxurious Roman", pb: 2 }}

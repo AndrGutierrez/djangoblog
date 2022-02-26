@@ -38,51 +38,49 @@ function CreatedPost(props) {
 
   if (!user) return <div>Log in to create post</div>;
 
-  if (user) {
-    return (
-      <Grid sx={{ display: "flex" }}>
-        <Grid container item xs={12} md={9}>
-          <Input
-            placeholder="title"
-            name="title"
-            onChange={handleChange}
-            inputProps={{
-              style: { height: "40px", fontSize: "1.75rem" },
-            }}
-            variant="standard"
-            fullWidth
-            required
-            id="title"
-            value={values.title}
-          />
-          <Input
-            multiline
-            name="content"
-            sx={{
-              display: "flex",
-              flexFlow: "column",
-              height: "100%",
-            }}
-            placeholder="content"
-            onChange={handleChange}
-            variant="standard"
-            fullWidth
-            required
-            id="content"
-            value={values.content}
-          />
-        </Grid>
-        <Grid md={3} item>
-          <Card>
-            <Button variant="contained" component="label">
-              Add Thumbnail
-              <input type="file" hidden onChange={handleFileChange} />
-            </Button>
-          </Card>
-        </Grid>
+  return (
+    <Grid sx={{ display: "flex" }}>
+      <Grid container item xs={12} md={9}>
+        <Input
+          placeholder="title"
+          name="title"
+          onChange={handleChange}
+          inputProps={{
+            style: { height: "40px", fontSize: "1.75rem" },
+          }}
+          variant="standard"
+          fullWidth
+          required
+          id="title"
+          value={values.title}
+        />
+        <Input
+          multiline
+          name="content"
+          sx={{
+            display: "flex",
+            flexFlow: "column",
+            height: "100%",
+          }}
+          placeholder="content"
+          onChange={handleChange}
+          variant="standard"
+          fullWidth
+          required
+          id="content"
+          value={values.content}
+        />
       </Grid>
-    );
-  }
+      <Grid md={3} item>
+        <Card>
+          <Button variant="contained" component="label">
+            Add Thumbnail
+            <input type="file" hidden onChange={handleFileChange} />
+          </Button>
+        </Card>
+      </Grid>
+    </Grid>
+  );
 }
 
 const mapStateToProps = (state) => ({
