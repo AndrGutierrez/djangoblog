@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const loadingSlice = {
-  name: "progress"
+  name: "progress",
   initialState: 0,
   reducers: {
     setProgress: ()=> action.payload
