@@ -40,7 +40,7 @@ export default function Layout({ children }) {
   const POST_PATH = "/posts/create";
   const actions = [
     {
-      name: "create",
+      name: "Create Post",
       link: POST_PATH,
       icon: <CreateIcon />,
     },

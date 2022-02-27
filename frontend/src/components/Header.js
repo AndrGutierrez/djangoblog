@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import { logout, login } from "../store/userSlice";
+import { login } from "../store/userSlice";
 import { setProgress } from "../store/progressSlice";
 import { createWithMedia } from "../utils/ApiUtils";
 import LinearProgress from "@mui/material/LinearProgress";
+import UserMenu from "../components/UserMenu";
 
 import {
   AppBar,
@@ -24,32 +25,22 @@ const listStyles = {
   justifyContent: "space-between",
 };
 
-function Header({ progress, type, user, post, logout, login, setProgress }) {
+function Header({ progress, type, user, post, login, setProgress }) {
   const dispatch = useDispatch();
   const history = useHistory();
   console.log("++++", process.env.API_ROUTE);
-  const LOGOUT_ROUTE = `${process.env.API_ROUTE}/api/logout`;
-  const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth`;
-  const POST_ROUTE = `${process.env.API_ROUTE}/api/posts/`;
+  const ROOT = process.env.API_ROUTE;
+  const LOGIN_ROUTE = `${ROOT}/api/auth`;
+  const POST_ROUTE = `${ROOT}/api/posts/`;
   const [currentUser, setCurrentUser] = useState(user);
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
   const fakeUser = { data: null };
 
-  const handleLogout = () =>
-    axios.get(LOGOUT_ROUTE).then(() => {
-      setCurrentUser(user);
-      logout();
-      history.push("/");
-    });
-
   const handleSubmit = () => {
     const data = new FormData();
-    Object.keys(post).forEach((key) => {
-      data.append(key, post[key]);
-    });
-
+    Object.keys(post).forEach((key) => data.append(key, post[key]));
     const progressAction = (prog) => dispatch(setProgress(prog));
 
     createWithMedia(POST_ROUTE, data, setProgress)
@@ -59,7 +50,9 @@ function Header({ progress, type, user, post, logout, login, setProgress }) {
       .then(() => history.push("/"));
   };
 
-  useEffect(() => user !== null && setCurrentUser(user), [user]);
+  useEffect(() => setCurrentUser(user), [user]);
+  useEffect(() => console.log(currentUser), [currentUser]);
+  useEffect(() => console.log("++++", user), [user]);
 
   useEffect(() => {
     axios
@@ -99,21 +92,7 @@ function Header({ progress, type, user, post, logout, login, setProgress }) {
             </ListItem>
             {currentUser ? (
               <ListItem component={Grid} container item md={4} xl={3}>
-                <Grid item>
-                  <Link to="/user/profile">
-                    <Avatar
-                      src={`${
-                        user.profile ? user.profile.profile_picture : ""
-                      }`}
-                      sx={{ width: 24, height: 24 }}
-                    />
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link to="/user/profile">
-                    <ListItemText primary={`${user.username}`} />
-                  </Link>
-                </Grid>
+                <UserMenu user={currentUser}></UserMenu>
               </ListItem>
             ) : (
               <ListItem component={Grid} container item md={8} spacing={2}>
@@ -175,7 +154,6 @@ const mapStateToProps = (state) => ({
   progress: state.progress,
 });
 const mapDispatchToProps = {
-  logout,
   login,
   setProgress,
 };
