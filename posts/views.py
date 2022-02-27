@@ -13,7 +13,6 @@ from .models import Post, Comment
 def posts(request, slug=None):
     '''list and create posts'''
     model_name = 'post'
-    print("####")
     if request.method == 'POST':
         response = store_model(request, PostSerializer)
     elif request.method == 'DELETE':
