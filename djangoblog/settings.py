@@ -42,7 +42,7 @@ cloudinary.config(cloud_name=os.environ.get("CLOUD_NAME"),
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "app-djangoblog.herokuapp.com", "djangoblog.online"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "app-djangoblog.herokuapp.com", "djangoblog.online", "www.djangoblog.online"]
 
 # Application definition
 
