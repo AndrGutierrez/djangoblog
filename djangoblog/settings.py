@@ -42,7 +42,10 @@ cloudinary.config(cloud_name=os.environ.get("CLOUD_NAME"),
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "app-djangoblog.herokuapp.com", "djangoblog.online", "www.djangoblog.online"]
+ALLOWED_HOSTS = [
+    "127.0.0.1", "localhost", "app-djangoblog.herokuapp.com",
+    "djangoblog.online", "www.djangoblog.online"
+]
 
 # Application definition
 
@@ -149,6 +152,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://djangoblog.online', 'https://www.djangoblog.online'
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
