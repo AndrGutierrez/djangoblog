@@ -27,6 +27,7 @@ const listStyles = {
 function Header({ progress, type, user, post, logout, login, setProgress }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log("++++", process.env.API_ROUTE);
   const LOGOUT_ROUTE = `${process.env.API_ROUTE}/api/logout`;
   const LOGIN_ROUTE = `${process.env.API_ROUTE}/api/auth`;
   const POST_ROUTE = `${process.env.API_ROUTE}/api/posts/`;
