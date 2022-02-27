@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { logout, login } from "../store/userSlice";
+import { setProgress } from "../store/progressSlice";
 import { createWithMedia } from "../utils/ApiUtils";
+import LinearProgress from "@mui/material/LinearProgress";
 
 import {
   AppBar,
   Typography,
   Toolbar,
-  List,
   ListItem,
   ListItemText,
   Button,
   Grid,
-  Box,
   Avatar,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
@@ -24,7 +24,7 @@ const listStyles = {
   justifyContent: "space-between",
 };
 
-function Header({ type, user, post, logout, login }) {
+function Header({ progress, type, user, post, logout, login, setProgress }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const LOGOUT_ROUTE = `${process.env.API_ROUTE}/api/logout`;
@@ -49,7 +49,9 @@ function Header({ type, user, post, logout, login }) {
       data.append(key, post[key]);
     });
 
-    createWithMedia(POST_ROUTE, data)
+    const progressAction = (prog) => dispatch(setProgress(prog));
+
+    createWithMedia(POST_ROUTE, data, setProgress)
       .catch((e) => {
         throw e;
       })
@@ -152,6 +154,16 @@ function Header({ type, user, post, logout, login }) {
           </Grid>
         </Grid>
       </Toolbar>
+      <Grid container display="block">
+        {progress > 0 ||
+          (progress >= 100 && (
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              color="secondary"
+            />
+          ))}
+      </Grid>
     </AppBar>
   );
 }
@@ -159,9 +171,11 @@ function Header({ type, user, post, logout, login }) {
 const mapStateToProps = (state) => ({
   user: state.user,
   post: state.post,
+  progress: state.progress,
 });
 const mapDispatchToProps = {
   logout,
   login,
+  setProgress,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

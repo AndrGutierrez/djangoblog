@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { setProgress } from "../store/loadingSlice";
 
 const config = { withCredentials: true };
 export async function getModel(path, id) {
@@ -11,7 +10,7 @@ export async function listModel(path) {
   return axios.get(path, config).then((response) => response.data);
 }
 
-export async function createWithMedia(path, data) {
+export async function createWithMedia(path, data, setProgress) {
   const config = {
     data,
     method: "post",
@@ -23,10 +22,7 @@ export async function createWithMedia(path, data) {
       let percentCompleted = Math.floor(
         (progressEvent.loaded * 100) / progressEvent.total
       );
-      console.log(percentCompleted);
-      // setProgress(percentCompleted);
-      // do whatever you like with the percentage complete
-      // maybe dispatch an action that will update a progress bar or something
+      setProgress(percentCompleted);
     },
   };
   axios(config);
