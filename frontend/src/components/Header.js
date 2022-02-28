@@ -28,7 +28,6 @@ const listStyles = {
 function Header({ progress, type, user, post, login, setProgress }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  console.log("++++", process.env.API_ROUTE);
   const ROOT = process.env.API_ROUTE;
   const LOGIN_ROUTE = `${ROOT}/api/auth`;
   const POST_ROUTE = `${ROOT}/api/posts/`;
@@ -38,12 +37,13 @@ function Header({ progress, type, user, post, login, setProgress }) {
   axios.defaults.withCredentials = true;
   const fakeUser = { data: null };
 
+  useEffect(() => console.log(progress), [progress]);
   const handleSubmit = () => {
     const data = new FormData();
     Object.keys(post).forEach((key) => data.append(key, post[key]));
     const progressAction = (prog) => dispatch(setProgress(prog));
 
-    createWithMedia(POST_ROUTE, data, setProgress)
+    createWithMedia(POST_ROUTE, data, progressAction)
       .catch((e) => {
         throw e;
       })
@@ -51,8 +51,6 @@ function Header({ progress, type, user, post, login, setProgress }) {
   };
 
   useEffect(() => setCurrentUser(user), [user]);
-  useEffect(() => console.log(currentUser), [currentUser]);
-  useEffect(() => console.log("++++", user), [user]);
 
   useEffect(() => {
     axios

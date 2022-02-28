@@ -33,9 +33,10 @@ const ITEM_HEIGHT = 48;
 export default function PostCard({ post, handleOpenModal }) {
   const [user, setUser] = useState({});
   const [styles, setStyles] = useState(imageStyles);
-  const [postThumbnail, setPostThumbnail] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const [openedMenu, setOpenedMenu] = useState(false);
+  const [postThumbnail, setPostThumbnail] = useState("");
+  const CDN_URL = process.env.CDN_URL;
   const USER_PATH = `${process.env.API_ROUTE}/api/users`;
   const created = new Date(post.created).toLocaleDateString();
   const handleOpen = () => handleOpenModal(post);
@@ -51,9 +52,7 @@ export default function PostCard({ post, handleOpenModal }) {
     setStyles({ ...styles, backgroundColor: generateRandomColor() });
   }, []);
 
-  useEffect(() => {
-    setPostThumbnail(`${process.env.CDN_URL}/${post.thumbnail}`);
-  }, [user]);
+  useEffect(() => setPostThumbnail(`${CDN_URL}/${post.thumbnail}`), [user]);
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -75,7 +74,7 @@ export default function PostCard({ post, handleOpenModal }) {
     <Grid item xs={12} sm={6} md={4} xl={3}>
       <Link to={`/posts/${user.username}/${post.slug}`}>
         <Card>
-          {post.thumbnail && (
+          {postThumbnail && (
             <CardMedia
               component={"img"}
               sx={styles}

@@ -46,8 +46,9 @@ function CreatedPost(props) {
           name="title"
           onChange={handleChange}
           inputProps={{
-            style: { height: "40px", fontSize: "1.75rem" },
+            style: { fontSize: "1.75rem", height: "40px" },
           }}
+          sx={{ height: "40px" }}
           variant="standard"
           fullWidth
           required
@@ -57,11 +58,6 @@ function CreatedPost(props) {
         <Input
           multiline
           name="content"
-          sx={{
-            display: "flex",
-            flexFlow: "column",
-            height: "100%",
-          }}
           placeholder="content"
           onChange={handleChange}
           variant="standard"

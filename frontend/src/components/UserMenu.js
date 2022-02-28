@@ -7,6 +7,7 @@ import {
   Tooltip,
   Typography,
   ListItemIcon,
+  Divider,
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
@@ -64,15 +65,6 @@ function UserMenu({ user, logout }) {
     },
     {
       id: "logout",
-      name: (
-        <>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </>
-      ),
-      action: () => handleLogout(),
     },
   ];
   const handleClose = () => {
@@ -115,7 +107,13 @@ function UserMenu({ user, logout }) {
             {name}
           </MenuItem>
         ))}
-        {/* <Divider /> */}
+        <Divider />
+        <MenuItem>
+          <ListItemIcon onClick={() => handleLogout()}>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
         {/* <MenuItem> */}
         {/*   <ListItemIcon> */}
         {/*     <Settings fontSize="small" /> */}
