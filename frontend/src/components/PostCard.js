@@ -73,7 +73,7 @@ export default function PostCard({ post, handleOpenModal }) {
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
       <Link to={`/posts/${user.username}/${post.slug}`}>
-        <Card>
+        <Card elevation={2}>
           {postThumbnail && (
             <CardMedia
               component={"img"}

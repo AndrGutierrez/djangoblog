@@ -25,7 +25,7 @@ def posts(request, slug=None):
     return response
 
 
-@api_view(['POST'])
+@api_view(['POST', 'DELETE'])
 @csrf_protect
 @ensure_csrf_cookie
 @login_required
@@ -33,4 +33,7 @@ def comments(request):
     '''list and create comments'''
     if request.method == 'POST':
         response = store_model(request, CommentSerializer)
+
+    if request.method == 'DELETE':
+        response = delete_model(Comment, request.data['id'])
     return response

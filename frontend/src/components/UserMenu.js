@@ -61,10 +61,7 @@ function UserMenu({ user, logout }) {
     {
       id: "profile",
       name: "Profile",
-      action: () => history.push("user/profile"),
-    },
-    {
-      id: "logout",
+      action: () => history.push("/user/profile"),
     },
   ];
   const handleClose = () => {

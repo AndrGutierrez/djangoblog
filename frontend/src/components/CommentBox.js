@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Grid, TextField, Button } from "@mui/material";
 import axios from "axios";
 import Comment from "./Comment";
+import GeneralModal from "../components/GeneralModal";
+import { deleteModel } from "../utils/ApiUtils";
 
 function CommentBox(props) {
   const { comments, post, user } = props;
@@ -10,12 +12,21 @@ function CommentBox(props) {
     post: null,
     user: null,
   });
+  const [modalOpened, setModalOpened] = useState(false);
   const [commentsList, setCommentsList] = useState(comments);
   const [commentValid, setCommentValid] = useState(false);
+  const [item, setItem] = useState({});
+  const [deletedItem, setDeletedItem] = useState(null);
   const COMMENT_PATH = `${process.env.API_ROUTE}/api/comments/`;
+  const modalData = {
+    title: "Are you sure you want to delete this post?",
+    description: "You won't be able to recover it",
+  };
+
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
+
   const handleChange = (e) => {
     const name = e.target.name;
     setValues((values) => ({
@@ -23,11 +34,8 @@ function CommentBox(props) {
       [name]: e.target.value,
     }));
   };
-  useEffect(() => {
-    if (values.content) {
-      setCommentValid(true);
-    }
-  }, [values]);
+
+  useEffect(() => values.content && setCommentValid(true), [values]);
 
   useEffect(() => {
     if (post && user) {
@@ -40,17 +48,50 @@ function CommentBox(props) {
       setCommentsList(comments);
     }
   }, [props]);
+
+  useEffect(() => {
+    if (comments) {
+      setCommentsList(
+        comments.filter(({ id }) => {
+          console.log(id, deletedItem.id);
+          return id !== deletedItem.id;
+        })
+      );
+    }
+  }, [deletedItem]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (commentValid)
       axios.post(COMMENT_PATH, values).then((response) => {
         setCommentsList([...commentsList, response.data]);
-        console.log(response.data, comments);
       });
   };
+
+  const handleOpenModal = (itm) => {
+    setItem(itm);
+    setModalOpened(true);
+  };
+
+  const handleDelete = async () => {
+    await deleteModel(COMMENT_PATH, item.id).then(() =>
+      setDeletedItem({ id: item.id })
+    );
+    handleCloseModal();
+  };
+
+  const handleCloseModal = () => setModalOpened(false);
+
   return (
     <form onSubmit={handleSubmit}>
       <Grid item xs={12} sx={{ py: 2 }} justifyContent="center">
+        <GeneralModal
+          opened={modalOpened}
+          handleClose={handleCloseModal}
+          data={modalData}
+          item={item}
+          action={() => handleDelete()}
+        ></GeneralModal>
         <TextField
           label="Add a public comment"
           variant="standard"
@@ -68,7 +109,11 @@ function CommentBox(props) {
         <Grid>
           {commentsList &&
             commentsList.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
+              <Comment
+                key={comment.id}
+                comment={comment}
+                handleOpenModal={handleOpenModal}
+              />
             ))}
         </Grid>
       </Grid>

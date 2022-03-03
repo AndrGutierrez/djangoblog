@@ -80,6 +80,15 @@ def list_model(request, model_serializer, model, model_name):
 
     if data.has_previous():
         previous_page = data.previous_page_number()
+
+    data = {
+        'body': serializer.data,
+        'count': paginator.count,
+        'numpages': paginator.num_pages,
+        'nextlink': f'/api/{model_name.lower()}/?page=' + str(next_page),
+        'prevlink': f'api/{model_name.lower()}/?page=' + str(previous_page)
+    },
+
     response = Response({
         'body':
         serializer.data,

@@ -44,7 +44,7 @@ function Profile({ user }) {
   };
 
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="center" sx={{ pt: 4 }}>
       <Paper
         component={Grid}
         item
@@ -60,30 +60,36 @@ function Profile({ user }) {
           justifyContent={{ xs: "center", sm: "flex-start" }}
           item
           xs={12}
-          md={4}
+          sm={2}
+          md={2}
+          lg={2}
+          xl={1}
         >
           <Grid sx={{ position: "relative" }}>
             <Avatar
               src={userProfile ? userProfile.profile_picture : ""}
               sx={{ width: 110, height: 110 }}
             />
-            <EditIcon sx={{ position: "absolute", top: 0, right: 0 }} />
+            <EditIcon
+              onClick={{}}
+              sx={{ position: "absolute", top: 0, right: 0 }}
+            />
           </Grid>
         </Grid>
 
-        <Grid item xs={12} md={8}>
-          <Typography variant="h4" align="center">
+        <Grid item xs={12} sm={3} md={3} sx={{}}>
+          <Typography variant="h3" sx={{ width: "100%", textAlign: "center" }}>
             {currentUser.username}
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          {biography ? (
-            <Typography>biography</Typography>
-          ) : (
-            <Typography variant="body2" color="text.secondary" align="center">
-              Add a biography <EditIcon />
-            </Typography>
-          )}
+          <Grid item xs={12}>
+            {biography ? (
+              <Typography>biography</Typography>
+            ) : (
+              <Typography variant="body2" color="text.secondary" align="center">
+                Add a biography <EditIcon />
+              </Typography>
+            )}
+          </Grid>
         </Grid>
       </Paper>
     </Box>

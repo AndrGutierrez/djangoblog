@@ -37,13 +37,12 @@ function Header({ progress, type, user, post, login, setProgress }) {
   axios.defaults.withCredentials = true;
   const fakeUser = { data: null };
 
-  useEffect(() => console.log(progress), [progress]);
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = new FormData();
-    Object.keys(post).forEach((key) => data.append(key, post[key]));
     const progressAction = (prog) => dispatch(setProgress(prog));
+    Object.keys(post).forEach((key) => data.append(key, post[key]));
 
-    createWithMedia(POST_ROUTE, data, progressAction)
+    await createWithMedia(POST_ROUTE, data, progressAction)
       .catch((e) => {
         throw e;
       })
@@ -65,7 +64,7 @@ function Header({ progress, type, user, post, login, setProgress }) {
           container
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <ListItem item md={6} lg={8} xl={9} component={Grid}>
+          <ListItem item md={5} lg={8} xl={9} component={Grid}>
             <Typography
               component={Link}
               to="/"
@@ -110,37 +109,36 @@ function Header({ progress, type, user, post, login, setProgress }) {
                 </Grid>
               </ListItem>
             )}
-            {currentUser && type === "post" && (
-              <ListItem
-                component={Grid}
-                xs={6}
-                md={5}
-                lg={6}
-                item
-                sx={{ justifyContent: "flex-end", display: "flex" }}
-              >
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  fullWidth
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </Button>
-              </ListItem>
-            )}
           </Grid>
+          {currentUser && type === "post" && (
+            <ListItem
+              component={Grid}
+              xs={4}
+              md={3}
+              lg={2}
+              item
+              sx={{ justifyContent: "flex-end", display: "flex" }}
+            >
+              <Button
+                color="secondary"
+                variant="contained"
+                fullWidth
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </ListItem>
+          )}
         </Grid>
       </Toolbar>
       <Grid container display="block">
-        {progress > 0 ||
-          (progress >= 100 && (
-            <LinearProgress
-              variant="determinate"
-              value={progress}
-              color="secondary"
-            />
-          ))}
+        {progress > 0 && progress < 100 && (
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            color="secondary"
+          />
+        )}
       </Grid>
     </AppBar>
   );

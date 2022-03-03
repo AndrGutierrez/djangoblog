@@ -1,34 +1,26 @@
 import React, { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
-import { Grid, Modal, Typography, Box } from "@mui/material";
-import axios from "axios";
+import { Grid } from "@mui/material";
 import GeneralModal from "../components/GeneralModal";
-import { deleteModel } from "../utils/ApiUtils";
+import { deleteModel, listModel } from "../utils/ApiUtils";
+import { setProgress } from "../store/progressSlice";
+import { useDispatch, connect } from "react-redux";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-export default function Posts() {
+function Posts({ setProgress, progress }) {
   const POSTS_ROUTE = `${process.env.API_ROUTE}/api/posts`;
-  const config = { withCredentials: true };
   const [posts, setPosts] = useState([]);
   const [deletedItem, setDeletedItem] = useState({});
   const [item, setItem] = useState({});
   const [modalOpened, setModalOpened] = useState(false);
-  useEffect(() => {
-    axios
-      .get(POSTS_ROUTE, config)
-      .then((response) => setPosts(response.data.body));
+  const dispatch = useDispatch();
+  const progressAction = (progress) => dispatch(setProgress(progress));
+
+  useEffect(async () => {
+    await listModel(POSTS_ROUTE, progressAction, progress).then(({ body }) => {
+      setPosts(body);
+    });
   }, [deletedItem]);
-  useEffect(() => {}, [posts]);
+
   const modalData = {
     title: "Are you sure you want to delete this post?",
     description: "You won't be able to recover it",
@@ -39,8 +31,8 @@ export default function Posts() {
     setModalOpened(true);
   };
 
-  const handleDelete = () => {
-    deleteModel(POSTS_ROUTE, item.id).then(() => setDeletedItem({}));
+  const handleDelete = async () => {
+    await deleteModel(POSTS_ROUTE, item.id).then(() => setDeletedItem({}));
     handleCloseModal();
   };
 
@@ -77,3 +69,11 @@ export default function Posts() {
     </Grid>
   );
 }
+
+const mapStateToProps = (state) => ({
+  progress: state.progress,
+});
+const mapDispatchToProps = {
+  setProgress,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
