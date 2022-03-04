@@ -15,16 +15,16 @@ function Posts({ setProgress, progress }) {
   const dispatch = useDispatch();
   const progressAction = (progress) => dispatch(setProgress(progress));
 
+  const modalData = {
+    title: "Are you sure you want to delete this post?",
+    description: "You won't be able to recover it",
+  };
+
   useEffect(async () => {
     await listModel(POSTS_ROUTE, progressAction, progress).then(({ body }) => {
       setPosts(body);
     });
   }, [deletedItem]);
-
-  const modalData = {
-    title: "Are you sure you want to delete this post?",
-    description: "You won't be able to recover it",
-  };
 
   const handleOpenModal = (itm) => {
     setItem(itm);
