@@ -52,7 +52,10 @@ export default function PostCard({ post, handleOpenModal }) {
     setStyles({ ...styles, backgroundColor: generateRandomColor() });
   }, []);
 
-  useEffect(() => setPostThumbnail(`${CDN_URL}/${post.thumbnail}`), [user]);
+  useEffect(
+    () => post && setPostThumbnail(`${CDN_URL}/${post.thumbnail}`),
+    [post]
+  );
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -81,7 +84,7 @@ export default function PostCard({ post, handleOpenModal }) {
               src={postThumbnail}
             ></CardMedia>
           )}
-          {!post.thumbnail && <Box sx={styles}></Box>}
+          {!postThumbnail && <Box sx={styles}></Box>}
 
           <CardContent sx={{ position: "relative" }}>
             <Box sx={{ position: "absolute", right: 5, top: 5 }}>

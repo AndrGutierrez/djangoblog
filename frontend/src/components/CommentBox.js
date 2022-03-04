@@ -51,12 +51,7 @@ function CommentBox(props) {
 
   useEffect(() => {
     if (comments) {
-      setCommentsList(
-        comments.filter(({ id }) => {
-          console.log(id, deletedItem.id);
-          return id !== deletedItem.id;
-        })
-      );
+      setCommentsList(comments.filter(({ id }) => id !== deletedItem.id));
     }
   }, [deletedItem]);
 
@@ -65,6 +60,7 @@ function CommentBox(props) {
     if (commentValid)
       axios.post(COMMENT_PATH, values).then((response) => {
         setCommentsList([...commentsList, response.data]);
+        setValues({ content: "" });
       });
   };
 
@@ -74,9 +70,12 @@ function CommentBox(props) {
   };
 
   const handleDelete = async () => {
-    await deleteModel(COMMENT_PATH, item.id).then(() =>
-      setDeletedItem({ id: item.id })
-    );
+    await deleteModel(COMMENT_PATH, item.id)
+      .catch((e) => {
+        alert("you are not the owner of this comment");
+        throw e;
+      })
+      .then(() => setDeletedItem({ id: item.id }));
     handleCloseModal();
   };
 

@@ -31,7 +31,6 @@ function Header({ progress, type, user, post, login, setProgress }) {
   const ROOT = process.env.API_ROUTE;
   const LOGIN_ROUTE = `${ROOT}/api/auth`;
   const POST_ROUTE = `${ROOT}/api/posts/`;
-  const [currentUser, setCurrentUser] = useState(user);
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.withCredentials = true;
@@ -48,8 +47,6 @@ function Header({ progress, type, user, post, login, setProgress }) {
       })
       .then(() => history.push("/"));
   };
-
-  useEffect(() => setCurrentUser(user), [user]);
 
   useEffect(() => {
     axios
@@ -87,9 +84,9 @@ function Header({ progress, type, user, post, login, setProgress }) {
                 <ListItemText primary="Home" />
               </Link>
             </ListItem>
-            {currentUser ? (
+            {user ? (
               <ListItem component={Grid} container item md={4} xl={3}>
-                <UserMenu user={currentUser}></UserMenu>
+                <UserMenu user={user}></UserMenu>
               </ListItem>
             ) : (
               <ListItem component={Grid} container item md={8} spacing={2}>
@@ -110,7 +107,7 @@ function Header({ progress, type, user, post, login, setProgress }) {
               </ListItem>
             )}
           </Grid>
-          {currentUser && type === "post" && (
+          {user && type === "post" && (
             <ListItem
               component={Grid}
               xs={4}

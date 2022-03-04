@@ -51,11 +51,12 @@ function UserMenu({ user, logout }) {
   const history = useHistory();
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleLogout = () =>
+  const handleLogout = () => {
     axios.get(LOGOUT_ROUTE).then(() => {
       dispatch(logout());
       history.push("/");
     });
+  };
 
   const options = [
     {
@@ -105,8 +106,8 @@ function UserMenu({ user, logout }) {
           </MenuItem>
         ))}
         <Divider />
-        <MenuItem>
-          <ListItemIcon onClick={() => handleLogout()}>
+        <MenuItem onClick={() => handleLogout()}>
+          <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout

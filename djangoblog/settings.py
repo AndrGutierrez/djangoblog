@@ -40,7 +40,7 @@ cloudinary.config(cloud_name=os.environ.get("CLOUD_NAME"),
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+DEBUG = (os.environ.get("DEBUG") == "True")
 
 ALLOWED_HOSTS = [
     "127.0.0.1", "localhost", "app-djangoblog.herokuapp.com",

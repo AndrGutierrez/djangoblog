@@ -32,7 +32,12 @@ function Posts({ setProgress, progress }) {
   };
 
   const handleDelete = async () => {
-    await deleteModel(POSTS_ROUTE, item.id).then(() => setDeletedItem({}));
+    await deleteModel(POSTS_ROUTE, item.id)
+      .catch(() => {
+        alert("You are not the owner of this post");
+        throw e;
+      })
+      .then(() => setDeletedItem({}));
     handleCloseModal();
   };
 
