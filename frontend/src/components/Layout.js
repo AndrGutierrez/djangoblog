@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
-import { SpeedDialIcon, SpeedDialAction, SpeedDial } from "@mui/material";
+import { SpeedDialIcon, SpeedDialAction, SpeedDial, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CreateIcon from "@mui/icons-material/Create";
 import { useHistory, useLocation } from "react-router-dom";
@@ -53,23 +53,25 @@ export default function Layout({ children }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header type={headerType} />
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: "fixed", bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
-      >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={() => history.push(action.link)}
-          />
-        ))}
-      </SpeedDial>
-      {children}
-      <Footer />
+      <Box sx={{ display: "flex", flexFlow: "column", height: "100%" }}>
+        <Header type={headerType} />
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={() => history.push(action.link)}
+            />
+          ))}
+        </SpeedDial>
+        {children}
+        <Footer />
+      </Box>
     </ThemeProvider>
   );
 }

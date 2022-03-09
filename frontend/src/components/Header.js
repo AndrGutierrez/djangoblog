@@ -55,13 +55,13 @@ function Header({ progress, type, user, post, login, setProgress }) {
       .then(({ data }) => dispatch(login({ user: data })));
   }, []);
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="primary" sx={{ flex: "0 1 auto" }}>
       <Toolbar variant="dense" className="" sx={listStyles}>
         <Grid
           container
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <ListItem item md={5} lg={8} xl={9} component={Grid}>
+          <ListItem item md={4} lg={5} xl={8} component={Grid}>
             <Typography
               component={Link}
               to="/"
@@ -76,16 +76,17 @@ function Header({ progress, type, user, post, login, setProgress }) {
             display={{ xs: "none", md: "flex" }}
             container
             item
-            md={6}
+            md={5}
             lg={4}
+            xl={3}
           >
-            <ListItem component={Grid} item md={3} lg={2} xl={1}>
+            <ListItem component={Grid} item md={3} lg={4} xl={3}>
               <Link to="/">
                 <ListItemText primary="Home" />
               </Link>
             </ListItem>
             {user ? (
-              <ListItem component={Grid} container item md={4} xl={3}>
+              <ListItem component={Grid} container item md={6} xl={3}>
                 <UserMenu user={user}></UserMenu>
               </ListItem>
             ) : (

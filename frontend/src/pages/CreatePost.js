@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import { Grid, Input, Card, Button } from "@mui/material";
+import { Grid, Input, Card, Button, Typography } from "@mui/material";
 import { setData } from "../store/postSlice";
 
 function CreatedPost(props) {
@@ -11,6 +11,7 @@ function CreatedPost(props) {
     content: "",
     thumbnail: "",
   });
+  const [thumbnailPath, setThumbnailPath] = useState("");
 
   const handleChange = (e) => {
     const key = e.target.id;
@@ -22,9 +23,15 @@ function CreatedPost(props) {
   };
 
   const handleFileChange = (e) => {
+    const reader = new FileReader();
+
     const thumbnail = e.target.files[0];
+    const url = reader.readAsDataURL(thumbnail);
+    reader.onloadend = (e) => setThumbnailPath(reader.result);
     setValues({ ...values, thumbnail });
   };
+
+  useEffect(() => console.log(thumbnailPath), [thumbnailPath]);
 
   useEffect(() => {
     if (user) {
@@ -39,7 +46,7 @@ function CreatedPost(props) {
   if (!user) return <div>Log in to create post</div>;
 
   return (
-    <Grid sx={{ display: "flex" }}>
+    <Grid sx={{ flex: "1 1 auto", display: "flex" }}>
       <Grid container item xs={12} md={9}>
         <Input
           placeholder="title"
@@ -65,15 +72,37 @@ function CreatedPost(props) {
           required
           id="content"
           value={values.content}
+          sx={{ height: "calc(100% - 40px)" }}
+          inputProps={{
+            style: { height: "100%", overflow: "scroll" },
+          }}
         />
       </Grid>
-      <Grid md={3} item>
-        <Card>
-          <Button variant="contained" component="label">
+      <Grid component={Card} container item md={3}>
+        <Grid item md={12}>
+          <Button component="label" variant="contained">
             Add Thumbnail
             <input type="file" hidden onChange={handleFileChange} />
           </Button>
-        </Card>
+        </Grid>
+        <Grid
+          component={Typography}
+          variant="subtitle1"
+          color="text.secondary"
+          item
+          md={12}
+        >
+          {values.thumbnail.name}
+        </Grid>
+        {thumbnailPath && (
+          <Grid
+            item
+            md={12}
+            component="img"
+            src={thumbnailPath}
+            alt="thumbnail"
+          />
+        )}
       </Grid>
     </Grid>
   );

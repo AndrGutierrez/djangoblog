@@ -10,20 +10,24 @@ function Profile({ user }) {
   const [biography, setBiography] = useState("");
   const PROFILE_PATH = `${process.env.API_ROUTE}/api/users`;
 
-  useEffect(() => {
-    if (user) setCurrentUser(user);
-  }, [user]);
+  useEffect(() => user && setCurrentUser(user), [user]);
 
-  useEffect(() => {
-    if (currentUser) setUserProfile(currentUser.profile);
-  }, [currentUser]);
+  useEffect(
+    () => currentUser && setUserProfile(currentUser.profile),
+    [currentUser]
+  );
 
-  useEffect(() => {
-    if (userProfile) setBiography(userProfile.biography);
-  }, [userProfile]);
+  useEffect(
+    () => userProfile && setBiography(userProfile.biography),
+    [userProfile]
+  );
 
   const handleFileChange = (e) => {
+    const reader = new FileReader();
+
     const thumbnail = e.target.files[0];
+    const url = reader.readAsDataURL(thumbnail);
+    reader.onloadend = (e) => setThumbnailPath(reader.result);
     setValues({ ...values, thumbnail });
   };
 
