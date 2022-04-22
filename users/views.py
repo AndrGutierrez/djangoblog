@@ -44,7 +44,7 @@ def login_view(request):
 @csrf_protect
 @ensure_csrf_cookie
 def users(request, id=None):
-    '''store or list users'''
+    '''signup or list users'''
     model_name = 'user'
     if request.method == 'POST':
         response = store_user(request)

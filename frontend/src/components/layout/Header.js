@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import { login } from "../store/userSlice";
-import { setProgress } from "../store/progressSlice";
-import { createWithMedia } from "../utils/ApiUtils";
+import { login } from "../../store/userSlice";
+import { setProgress } from "../../store/progressSlice";
+import { createWithMedia } from "../../utils/ApiUtils";
 import LinearProgress from "@mui/material/LinearProgress";
-import UserMenu from "../components/UserMenu";
+import UserMenu from "../utils/UserMenu";
 
 import {
   AppBar,
@@ -14,10 +14,9 @@ import {
   ListItemText,
   Button,
   Grid,
-  Avatar,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { UnstyledLink } from "../utils/UnstyledLink";
 import axios from "axios";
 
 const listStyles = {
@@ -63,7 +62,7 @@ function Header({ progress, type, user, post, login, setProgress }) {
         >
           <ListItem item md={4} lg={5} xl={8} component={Grid}>
             <Typography
-              component={Link}
+              component={UnstyledLink}
               to="/"
               variant="h5"
               sx={{ fontFamily: "PT Sans Narrow", height: "100%" }}
@@ -81,9 +80,9 @@ function Header({ progress, type, user, post, login, setProgress }) {
             xl={3}
           >
             <ListItem component={Grid} item md={3} lg={4} xl={3}>
-              <Link to="/">
+              <UnstyledLink to="/">
                 <ListItemText primary="Home" />
-              </Link>
+              </UnstyledLink>
             </ListItem>
             {user ? (
               <ListItem component={Grid} container item md={6} xl={3}>
@@ -92,18 +91,18 @@ function Header({ progress, type, user, post, login, setProgress }) {
             ) : (
               <ListItem component={Grid} container item md={8} spacing={2}>
                 <Grid item xs={6}>
-                  <Link to="/login">
+                  <UnstyledLink to="/login">
                     <Button color="secondary" variant="outlined" fullWidth>
                       Login
                     </Button>
-                  </Link>
+                  </UnstyledLink>
                 </Grid>
                 <Grid item xs={6}>
-                  <Link to="/signup">
+                  <UnstyledLink to="/signup">
                     <Button color="secondary" variant="contained" fullWidth>
                       Sign up
                     </Button>
-                  </Link>
+                  </UnstyledLink>
                 </Grid>
               </ListItem>
             )}

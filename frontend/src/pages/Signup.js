@@ -5,6 +5,7 @@ import {
   TextField,
   Grid,
   Button,
+  Alert,
   Link as MuiLink,
 } from "@mui/material";
 
@@ -37,6 +38,7 @@ export default function Signup() {
   axios.defaults.withCredentials = true;
 
   const [formValid, setValidForm] = useState(false);
+  const [error, setError] = useState("");
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -63,6 +65,7 @@ export default function Signup() {
   const handleChange = (e) => {
     const key = e.target.id;
     const value = e.target.value;
+    console.log(values);
     setValues((values) => ({
       ...values,
       [key]: value,
@@ -71,10 +74,12 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
     if (formValid) {
       axios
         .post(SIGNUP_ROUTE, values)
         .catch((e) => {
+          setError(e.response.data);
           throw e;
         })
         .then(() => history.push(`/signup/success/${values.username}`));
@@ -83,6 +88,8 @@ export default function Signup() {
   return (
     <Grid container sx={commonStyles}>
       <Paper sx={FormStyle} xs={12} sm={8} md={5} xl={3}>
+        {error && <Alert severity="error">{error}</Alert>}
+
         <form onSubmit={handleSubmit}>
           <Typography variant="h5" sx={{ mb: 1 }}>
             Signup

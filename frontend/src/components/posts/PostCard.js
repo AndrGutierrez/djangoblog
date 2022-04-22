@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import { blue, red, purple, pink, green } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link } from "react-router-dom";
-import { getModel } from "../utils/ApiUtils";
+import { UnstyledLink } from "../utils/UnstyledLink";
+import { getModel } from "../../utils/ApiUtils";
 
 const colors = [
   red[500],
@@ -75,7 +75,7 @@ export default function PostCard({ post, handleOpenModal }) {
 
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
-      <Link to={`/posts/${user.username}/${post.slug}`}>
+      <UnstyledLink to={`/posts/${user.username}/${post.slug}`}>
         <Card elevation={2}>
           {postThumbnail && (
             <CardMedia
@@ -153,7 +153,7 @@ export default function PostCard({ post, handleOpenModal }) {
             </Grid>
           </CardContent>
         </Card>
-      </Link>
+      </UnstyledLink>
     </Grid>
   );
 }

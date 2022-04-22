@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getModel } from "../utils/ApiUtils";
 import { Typography, Grid, Avatar, Box, Paper } from "@mui/material";
-import CommentBox from "../components/CommentBox";
+import CommentBox from "../components/posts/CommentBox";
 
 const centerVertically = { display: "flex", alignItems: "center" };
 export default function Post() {

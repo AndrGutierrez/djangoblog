@@ -7,11 +7,6 @@ html,
   height: 100%;
 }
 
-a {
-  text-decoration: none;
-  color: unset;
-}
-
 .page_title {
   font-family: "PT Sans Narrow" !important;
 }

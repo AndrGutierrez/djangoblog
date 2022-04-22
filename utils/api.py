@@ -16,11 +16,14 @@ def store_user(request):
     password_confirmation = request.data['password_confirmation']
     email_exists = User.objects.filter(email=email).exists()
 
-    if email_exists or password != password_confirmation:
-        response = Response("email already exist",
+    if email_exists:
+        response = Response("Email already exists!",
                             status=status.HTTP_400_BAD_REQUEST)
-        return response
-    response = store_model(request, UserSerializer)
+    elif password != password_confirmation:
+        response = Response("passwords don't match",
+                            status=status.HTTP_400_BAD_REQUEST)
+    else:
+        response = store_model(request, UserSerializer)
 
     return response
 

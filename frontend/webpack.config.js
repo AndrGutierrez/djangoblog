@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WebpackDevServer = require("webpack-dev-server");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
@@ -22,6 +21,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
+    root: path.resolve("./src"),
   },
   module: {
     rules: [

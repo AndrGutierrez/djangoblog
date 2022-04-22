@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Grid, TextField, Button } from "@mui/material";
 import axios from "axios";
 import Comment from "./Comment";
-import GeneralModal from "../components/GeneralModal";
-import { deleteModel } from "../utils/ApiUtils";
+import GeneralModal from "../utils/GeneralModal";
+import { deleteModel } from "../../utils/ApiUtils";
 
 function CommentBox(props) {
   const { comments, post, user } = props;

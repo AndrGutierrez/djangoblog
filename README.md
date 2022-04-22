@@ -18,6 +18,7 @@ DATABASE_ROOT_PASSWORD=""
 DATABASE_NAME=djangoblog
 DATABASE_PORT=3066
 SECRET_KEY="django-insecure-lj*ov0b$*ip@h5-8%&hhyni%=a_rw=j1hzohj3*vn@=%)!g2#+"
+API_ROUTE="http://localhost:8001"
 DEBUG=True
 ```
 

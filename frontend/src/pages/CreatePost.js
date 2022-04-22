@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Grid, Input, Card, Button, Typography } from "@mui/material";
 import { setData } from "../store/postSlice";
+import LoginWarning from "../components/utils/LoginWarning";
 
 function CreatedPost(props) {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ function CreatedPost(props) {
     }
   }, [values]);
 
-  if (!user) return <div>Log in to create post</div>;
+  if (!user) return <LoginWarning />;
 
   return (
     <Grid sx={{ flex: "1 1 auto", display: "flex" }}>

@@ -9,7 +9,7 @@ import {
   MenuItem,
   IconButton,
 } from "@mui/material";
-import { getModel } from "../utils/ApiUtils";
+import { getModel } from "../../utils/ApiUtils";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const ITEM_HEIGHT = 48;

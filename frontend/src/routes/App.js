@@ -7,8 +7,8 @@ import Posts from "../pages/Posts";
 import CreatePost from "../pages/CreatePost";
 import Post from "../pages/Post";
 import CreatedAccount from "../pages/CreatedAccount";
-import Layout from "../components/Layout";
-import Profile from "../pages/Profile"
+import Layout from "../components/layout";
+import Profile from "../pages/Profile";
 
 export default function App() {
   return (

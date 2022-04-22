@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import PostCard from "../components/PostCard";
+import PostCard from "../components/posts/PostCard";
 import { Grid } from "@mui/material";
-import GeneralModal from "../components/GeneralModal";
+import GeneralModal from "../components/utils/GeneralModal";
 import { deleteModel, listModel } from "../utils/ApiUtils";
 import { setProgress } from "../store/progressSlice";
 import { useDispatch, connect } from "react-redux";

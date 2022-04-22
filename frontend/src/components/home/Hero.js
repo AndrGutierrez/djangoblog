@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Box, Button, Grid, Paper, Skeleton } from "@mui/material";
-import { Link } from "react-router-dom";
+import { UnstyledLink } from "../utils/UnstyledLink";
 
 const heroStyles = {
   padding: "20px",
@@ -30,11 +30,11 @@ export default function Hero() {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.{" "}
           </Typography>
-          <Link to="/posts">
+          <UnstyledLink to="/posts">
             <Button color="neutral" variant="outlined">
               Let's start
             </Button>
-          </Link>
+          </UnstyledLink>
         </Grid>
         <Grid item md={6}>
           <Paper

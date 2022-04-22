@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
-import { logout } from "../store/userSlice";
+import { logout } from "../../store/userSlice";
 import { connect, useDispatch } from "react-redux";
 import axios from "axios";
 
