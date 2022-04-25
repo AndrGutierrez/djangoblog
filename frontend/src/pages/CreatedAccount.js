@@ -12,15 +12,15 @@ export default function CreatedAccount() {
   const { username } = useParams();
 
   return (
-    <Grid container sx={{ marginTop: "10px", justifyContent: "center" }}>
+    <Grid container sx={{ p: 3, justifyContent: "center" }}>
       <Paper xs={12} sm={8} md={5} xl={3}>
         <Grid container sx={FormStyle}>
-          <Grid item md={3}>
+          <Grid item xs={3}>
             <CheckCircleIcon
               sx={{ color: "#009DAE", width: "50px", height: "50px" }}
             ></CheckCircleIcon>
           </Grid>
-          <Grid item md={12}>
+          <Grid item xs={12}>
             <Typography variant="body1" sx={{ textAlign: "center" }}>
               Account Created Successfuly <strong>{username}</strong> go to{" "}
               <MuiLink component={Link} to="/login">

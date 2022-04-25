@@ -5,7 +5,7 @@ import { UnstyledLink } from "../utils/UnstyledLink";
 
 export default function LoginWarning() {
   return (
-    <Grid containers sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+    <Grid container sx={{ display: "flex", justifyContent: "center", p: 3 }}>
       <Grid
         container
         item

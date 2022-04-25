@@ -90,7 +90,7 @@ def list_model(request, model_serializer, model, model_name):
         'numpages': paginator.num_pages,
         'nextlink': f'/api/{model_name.lower()}/?page=' + str(next_page),
         'prevlink': f'api/{model_name.lower()}/?page=' + str(previous_page)
-    },
+    }
 
     response = Response({
         'body':
@@ -120,10 +120,10 @@ def store_model(request, model_serializer):
     return response
 
 
-def delete_model(Model, pk):
+def delete_model(model, pk):
     """Deletes the model"""
     try:
-        model = Model.objects.get(id=pk)
+        model = model.objects.get(id=pk)
         model.delete()
         response = Response("item deleted successfuly",
                             status=status.HTTP_204_NO_CONTENT)
@@ -134,10 +134,10 @@ def delete_model(Model, pk):
     return response
 
 
-def delete_checking_user(Model, request):
+def delete_checking_user(model, request):
     '''delete model if current user is the owner of it'''
     try:
-        model = Model.objects.get(id=request.data['id'])
+        model = model.objects.get(id=request.data['id'])
         if request.user.id is model.user_id or request.user.is_superuser:
             model.delete()
             response = Response("item deleted successfuly",
@@ -146,7 +146,7 @@ def delete_checking_user(Model, request):
             response = Response(
                 "You don't have the permissions to delete this post",
                 status=status.HTTP_403_FORBIDDEN)
-    except Model.DoesNotExist:
+    except model.DoesNotExist:
         response = Response("Error 404, item not found",
                             status=status.HTTP_404_NOT_FOUND)
     return response

@@ -1,21 +1,18 @@
 '''User profile model'''
 from django.db import models
-from django.db.models import ImageField, TextField, OneToOneField, DateTimeField, EmailField
+from django.db.models import TextField, OneToOneField, DateTimeField, EmailField
 from django.contrib.auth.models import AbstractUser
-from .managers import CustomUserManager
-
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from cloudinary.models import CloudinaryField
+from .managers import CustomUserManager
+
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token_and_profile(sender,
-                                  instance=None,
-                                  created=False,
-                                  **kwargs):
-    """Asign an and profile for every user"""
+def create_auth_token_and_profile(instance=None, created=False, **kwargs):
+    """Asign profile for every user"""
     if created:
         Profile.objects.create(user=instance)
 
@@ -29,6 +26,7 @@ class User(AbstractUser):
     objects = CustomUserManager()
 
     class Meta:
+        """order user list by id"""
         ordering = ['-id']
 
     def __str__(self):
@@ -45,6 +43,7 @@ class Profile(models.Model):
     modified = DateTimeField(auto_now=True)
 
     class Meta:
+        """order profile list by id"""
         ordering = ['-id']
 
     def __str__(self):

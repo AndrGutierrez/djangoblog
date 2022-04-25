@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -22,7 +23,6 @@ load_dotenv()
 AUTH_USER_MODEL = 'users.User'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-import cloudinary
 
 PORT = os.environ.get("DATABASE_PORT")
 HOST = os.environ.get("DATABASE_HOST")

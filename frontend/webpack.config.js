@@ -21,7 +21,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
-    root: path.resolve("./src"),
   },
   module: {
     rules: [

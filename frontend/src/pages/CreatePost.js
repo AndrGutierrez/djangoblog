@@ -27,7 +27,6 @@ function CreatedPost(props) {
     const reader = new FileReader();
 
     const thumbnail = e.target.files[0];
-    const url = reader.readAsDataURL(thumbnail);
     reader.onloadend = (e) => setThumbnailPath(reader.result);
     setValues({ ...values, thumbnail });
   };
