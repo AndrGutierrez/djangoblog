@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Grid, Paper, Avatar, Typography, Box } from "@mui/material";
+import { Grid, Paper, Typography, Box } from "@mui/material";
+import Avatar from "../components/utils/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
+import UpdatePictureModal from "../components/profile/UpdatePictureModal";
 
 function Profile({ user }) {
   const [currentUser, setCurrentUser] = useState({});
+  const [modalOpened, setModalOpened] = useState(false);
   const [userProfile, setUserProfile] = useState({});
   const [biography, setBiography] = useState("");
-  const PROFILE_PATH = `${process.env.API_ROUTE}/api/users`;
+  const CDN_URL = process.env.CDN_URL;
+  const [profilePicture, setProfilePicture] = useState("");
 
-  useEffect(() => user && setCurrentUser(user), [user]);
+  useEffect(() => {
+    if (user) {
+      const pfp = `${CDN_URL}/${user.profile.profile_picture}`;
+      console.log(pfp);
+      setProfilePicture(pfp);
+      setCurrentUser(user);
+    }
+  }, [user]);
 
   useEffect(
     () => currentUser && setUserProfile(currentUser.profile),
@@ -31,24 +42,19 @@ function Profile({ user }) {
     setValues({ ...values, thumbnail });
   };
 
-  const updateProfilePicture = () => {
-    const data = new FormData();
-    Object.keys(post).forEach((key) => {
-      data.append(key, post[key]);
-    });
-
-    axios({
-      method: "patch",
-      url: PROFILE_PATH,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: data,
-    });
-  };
+  const openEditModal = () => setModalOpened(true);
+  const closeEditModal = () => setModalOpened(false);
 
   return (
-    <Box display="flex" justifyContent="center" sx={{ pt: 4 }}>
+    <Box display="flex" justifyContent="center" sx={{ p: 3 }}>
+      {modalOpened && (
+        <UpdatePictureModal
+          open={modalOpened}
+          handleClose={closeEditModal}
+          picture={profilePicture}
+          setUpdated={setProfilePicture}
+        ></UpdatePictureModal>
+      )}
       <Paper
         component={Grid}
         item
@@ -58,26 +64,24 @@ function Profile({ user }) {
         lg={7}
         container
         spacing={2}
+        sx={{ p: 3 }}
       >
         <Grid
           sx={{ display: "flex" }}
           justifyContent={{ xs: "center", sm: "flex-start" }}
           item
           xs={12}
-          sm={2}
-          md={2}
+          sm={3}
           lg={2}
           xl={1}
         >
           <Grid sx={{ position: "relative" }}>
-            <Avatar
-              src={userProfile ? userProfile.profile_picture : ""}
-              sx={{ width: 110, height: 110 }}
-            />
+            <Avatar src={profilePicture} sx={{ width: 110, height: 110 }} />
             <EditIcon
-              onClick={{}}
+              onClick={openEditModal}
+              type="file"
               sx={{ position: "absolute", top: 0, right: 0 }}
-            />
+            ></EditIcon>
           </Grid>
         </Grid>
 

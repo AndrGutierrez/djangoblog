@@ -161,5 +161,7 @@ def update_model(request, model, model_serializer, pk):
     if serializer.is_valid():
         serializer.save()
         response = Response(serializer.data)
-    response = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+
+        response = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return response

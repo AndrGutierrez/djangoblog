@@ -5,9 +5,9 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.http import HttpResponse
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import login, logout, authenticate
-from users.models import User
-from utils.api import store_user, list_model, get_user_by_email, get_model_by_pk
-from .serializers import UserSerializer
+from users.models import User, Profile
+from utils.api import store_user, list_model, get_user_by_email, get_model_by_pk, update_model
+from .serializers import UserSerializer, ProfileSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -39,6 +39,10 @@ def login_view(request):
 
     return response
 
+@api_view(['PATCH'])
+def profile(request, id=None):
+    response = update_model(request, Profile, ProfileSerializer, id)
+    return response
 
 @api_view(['GET', 'POST'])
 @csrf_protect
@@ -61,3 +65,4 @@ def logout_view(request):
     response = HttpResponse("logged out successfully", status=200)
     logout(request)
     return response
+

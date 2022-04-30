@@ -9,7 +9,7 @@ import { useHistory, useLocation } from "react-router-dom";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#009DAE",
+      main: "#009DAE !important",
       link: "#03a9f4",
     },
     secondary: {

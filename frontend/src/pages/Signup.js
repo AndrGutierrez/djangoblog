@@ -47,20 +47,29 @@ export default function Signup() {
     first_name: "",
     last_name: "",
   });
+  const [emailIsValid, setEmailIsValid] = useState(true);
+  const [passwordsDontMatch, setPasswordsDontMatch] = useState(true);
+  const [passwordTooShort, setPasswordTooShort] = useState(false);
 
   useEffect(() => {
+    const { password, password_confirmation, email } = values;
+    const passwordValidator = password != password_confirmation;
+    setEmailIsValid(!emailValidator(email) && email != "");
+    setPasswordTooShort(
+      values.password.length < 4 && values.password.length != 0
+    );
+    setPasswordsDontMatch(passwordValidator);
+  }, [values]);
+  useEffect(() => {
     const blankField = Object.values(values).includes("");
-    const validation =
-      blankField ||
-      !emailValidator(values.email) ||
-      values.password != values.password_confirmation ||
-      values.password.length < 4;
-    if (validation) {
+    const formIsInvalid =
+      blankField || !emailIsValid || passwordsDontMatch || passwordTooShort;
+    if (!formIsInvalid) {
       setValidForm(false);
     } else {
       setValidForm(true);
     }
-  }, [values]);
+  }, [emailIsValid, passwordsDontMatch, passwordTooShort]);
 
   const handleChange = (e) => {
     const key = e.target.id;
@@ -81,7 +90,7 @@ export default function Signup() {
           const data = e.response.data;
           const errors = Object.keys(data).map((key) => ({
             value: data[key],
-            reason: key
+            reason: key,
           }));
           setErrors(errors);
           throw e;
@@ -93,7 +102,11 @@ export default function Signup() {
     <Grid container sx={commonStyles}>
       <Paper sx={FormStyle} xs={12} sm={8} md={5} xl={3}>
         {errors !== [] &&
-            errors.map((error) => <Alert severity="error" key={error.reason}>{error.value}</Alert>)}
+          errors.map((error) => (
+            <Alert severity="error" key={error.reason}>
+              {error.value}
+            </Alert>
+          ))}
 
         <form onSubmit={handleSubmit}>
           <Typography variant="h5" sx={{ mb: 1 }}>
@@ -109,6 +122,8 @@ export default function Signup() {
               fullWidth
               type="email"
               required
+              error={emailIsValid}
+              helperText={emailIsValid && "Invalid email"}
             ></TextField>
             <TextField
               onChange={handleChange}
@@ -152,6 +167,8 @@ export default function Signup() {
               type="password"
               fullWidth
               required
+              error={passwordTooShort}
+              helperText={passwordTooShort && "Password is too short"}
             ></TextField>
           </Grid>
           <Grid>
@@ -163,6 +180,8 @@ export default function Signup() {
               type="password"
               fullWidth
               required
+              error={passwordsDontMatch}
+              helperText={passwordsDontMatch && "Passwords don't match"}
             ></TextField>
           </Grid>
           <Button

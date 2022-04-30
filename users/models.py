@@ -36,9 +36,9 @@ class User(AbstractUser):
 class Profile(models.Model):
     '''User Profile model'''
     user = OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = CloudinaryField("image")
-    banner = CloudinaryField("image")
-    biography = TextField(blank=True)
+    profile_picture = CloudinaryField("image", null=True, blank=True)
+    banner = CloudinaryField("image", null=True, blank=True)
+    biography = TextField( null=True, blank=True)
     created = DateTimeField(auto_now_add=True)
     modified = DateTimeField(auto_now=True)
 

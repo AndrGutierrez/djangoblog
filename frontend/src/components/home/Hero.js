@@ -30,11 +30,28 @@ export default function Hero() {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.{" "}
           </Typography>
-          <UnstyledLink to="/posts">
-            <Button color="neutral" variant="outlined">
-              Let's start
-            </Button>
-          </UnstyledLink>
+          <Grid container spacing={2} sx={{ py: 2 }}>
+            <Grid item>
+              <Button
+                component={UnstyledLink}
+                color="neutral"
+                to="/posts"
+                variant="outlined"
+              >
+                Let's start
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                component={UnstyledLink}
+                to="posts/create"
+                color="secondary"
+                variant="contained"
+              >
+                Create your own post{" "}
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item md={6}>
           <Paper

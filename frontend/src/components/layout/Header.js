@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { login } from "../../store/userSlice";
 import { setProgress } from "../../store/progressSlice";
 import { createWithMedia } from "../../utils/ApiUtils";
 import LinearProgress from "@mui/material/LinearProgress";
 import UserMenu from "../utils/UserMenu";
+import { styled } from "@mui/material/styles";
 
 import {
   AppBar,
@@ -40,6 +41,8 @@ function Header({ progress, type, user, post, login, setProgress }) {
     const progressAction = (prog) => dispatch(setProgress(prog));
     Object.keys(post).forEach((key) => data.append(key, post[key]));
 
+    console.log(post["thumbnail"]);
+
     await createWithMedia(POST_ROUTE, data, progressAction)
       .catch((e) => {
         throw e;
@@ -54,25 +57,25 @@ function Header({ progress, type, user, post, login, setProgress }) {
       .then(({ data }) => dispatch(login({ user: data })));
   }, []);
   return (
-    <AppBar position="static" color="primary" sx={{ flex: "0 1 auto" }}>
+    <AppBar position="static" sx={{ flex: "0 1 auto" }}>
       <Toolbar variant="dense" className="" sx={listStyles}>
         <Grid
           container
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <ListItem item md={4} lg={5} xl={8} component={Grid}>
+          <ListItem item md={4} lg={5} xl={6} component={Grid}>
             <Typography
               component={UnstyledLink}
               to="/"
               variant="h5"
-              sx={{ fontFamily: "PT Sans Narrow", height: "100%" }}
+              sx={{ fontFamily: "PT Sans Narrow !important", height: "100%" }}
             >
               Djangoblog
             </Typography>
           </ListItem>
 
           <Grid
-            display={{ xs: "none", md: "flex" }}
+            display={{ xs: "none", md: "flex", justifyContent: "flex-end" }}
             container
             item
             md={5}
@@ -85,7 +88,7 @@ function Header({ progress, type, user, post, login, setProgress }) {
               </UnstyledLink>
             </ListItem>
             {user ? (
-              <ListItem component={Grid} container item md={6} xl={3}>
+              <ListItem component={Grid} container item md={6} xl={4}>
                 <UserMenu user={user}></UserMenu>
               </ListItem>
             ) : (
