@@ -24,8 +24,10 @@ export default function UpdatePictureModal({
   handleClose,
   picture,
   setUpdated,
+  user,
 }) {
-  const PROFILE_PATH = `${process.env.API_ROUTE}/api/profile/2`;
+  const PROFILE_PATH =
+    user && `${process.env.API_ROUTE}/api/profile/${user.profile.id}`;
   const [picturePath, setPicturePath] = useState(picture);
   const [profilePicture, setProfilePicture] = useState("");
   const handleChangeFile = (files) => {
@@ -41,7 +43,6 @@ export default function UpdatePictureModal({
     const data = new FormData();
     data.append("profile_picture", profilePicture);
 
-    console.log(profilePicture);
     axios({
       method: "patch",
       url: PROFILE_PATH,
@@ -51,7 +52,7 @@ export default function UpdatePictureModal({
       data: data,
     })
       .catch((e) => {
-        console.log(e.response);
+        // console.log(e.response);
       })
       .then(() => {
         setUpdated(picturePath);

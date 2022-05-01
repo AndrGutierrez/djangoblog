@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Grid, Paper, Typography, Box } from "@mui/material";
 import Avatar from "../components/utils/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import UpdatePictureModal from "../components/profile/UpdatePictureModal";
 
 function Profile({ user }) {
@@ -17,7 +16,6 @@ function Profile({ user }) {
   useEffect(() => {
     if (user) {
       const pfp = `${CDN_URL}/${user.profile.profile_picture}`;
-      console.log(pfp);
       setProfilePicture(pfp);
       setCurrentUser(user);
     }
@@ -33,15 +31,6 @@ function Profile({ user }) {
     [userProfile]
   );
 
-  const handleFileChange = (e) => {
-    const reader = new FileReader();
-
-    const thumbnail = e.target.files[0];
-    const url = reader.readAsDataURL(thumbnail);
-    reader.onloadend = (e) => setThumbnailPath(reader.result);
-    setValues({ ...values, thumbnail });
-  };
-
   const openEditModal = () => setModalOpened(true);
   const closeEditModal = () => setModalOpened(false);
 
@@ -53,6 +42,7 @@ function Profile({ user }) {
           handleClose={closeEditModal}
           picture={profilePicture}
           setUpdated={setProfilePicture}
+          user={user}
         ></UpdatePictureModal>
       )}
       <Paper
