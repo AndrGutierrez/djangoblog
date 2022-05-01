@@ -32,6 +32,7 @@ const imageStyles = {
 const ITEM_HEIGHT = 48;
 export default function PostCard({ post, handleOpenModal }) {
   const [user, setUser] = useState({});
+  const [profilePicture, setProfilePicture] = useState("");
   const [styles, setStyles] = useState(imageStyles);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openedMenu, setOpenedMenu] = useState(false);
@@ -57,6 +58,10 @@ export default function PostCard({ post, handleOpenModal }) {
     [post]
   );
 
+  useEffect(() => {
+    if (user.profile)
+      setProfilePicture(`${CDN_URL}/${user.profile.profile_picture}`);
+  }, [user]);
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -131,10 +136,7 @@ export default function PostCard({ post, handleOpenModal }) {
               {post.content ? post.content.substring(0, 150) : ""}
             </Typography>
             <Grid sx={{ display: "flex" }}>
-              <Avatar
-                src={`${user ? user.profile_picture : ""}`}
-                sx={{ width: 24, height: 24 }}
-              />
+              <Avatar src={profilePicture} sx={{ width: 24, height: 24 }} />
               <Grid container sx={{ px: 1 }}>
                 <Typography
                   variant="caption"

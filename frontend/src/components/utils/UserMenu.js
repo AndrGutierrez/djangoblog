@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Avatar,
@@ -44,8 +44,10 @@ const paperStyles = {
 
 function UserMenu({ user, logout }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("");
   const open = Boolean(anchorEl);
   const ROOT = process.env.API_ROUTE;
+  const CDN_URL = process.env.CDN_URL;
   const LOGOUT_ROUTE = `${ROOT}/api/logout`;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -68,6 +70,11 @@ function UserMenu({ user, logout }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (user.profile)
+      setProfilePicture(`${CDN_URL}/${user.profile.profile_picture}`);
+  }, [user]);
   if (!user) return "";
   return (
     <>
@@ -80,10 +87,7 @@ function UserMenu({ user, logout }) {
           spacing={2}
         >
           <Grid item>
-            <Avatar
-              src={`${user.profile ? user.profile.profile_picture : ""}`}
-              sx={{ width: 24, height: 24 }}
-            />
+            <Avatar src={profilePicture} sx={{ width: 24, height: 24 }} />
           </Grid>
           <Grid item>
             <Typography color="white">{user.username}</Typography>

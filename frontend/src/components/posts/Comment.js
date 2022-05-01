@@ -3,7 +3,6 @@ import {
   Card,
   Grid,
   Avatar,
-  Divider,
   Typography,
   Menu,
   MenuItem,
@@ -19,6 +18,7 @@ export default function Comment({ comment, handleOpenModal }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [profilepic, setProfilepic] = useState("");
   const USER_PATH = `${process.env.API_ROUTE}/api/users`;
+  const CDN_URL = process.env.CDN_URL;
 
   const options = [
     { action: () => handleOpenModal(comment), name: "edit" },
@@ -31,7 +31,8 @@ export default function Comment({ comment, handleOpenModal }) {
 
   useEffect(() => {
     if (user) {
-      setProfilepic(user.profile.profile_picture);
+      const picture = `${CDN_URL}/${user.profile.profile_picture}`;
+      setProfilepic(picture);
     }
   }, [user]);
 

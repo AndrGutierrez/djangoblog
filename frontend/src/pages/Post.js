@@ -32,7 +32,9 @@ export default function Post() {
   );
 
   useEffect(
-    () => user.profile && setProfilePicture(user.profile.profile_picture),
+    () =>
+      user.profile &&
+      setProfilePicture(`${CDN_URL}/${user.profile.profile_picture}`),
     [user]
   );
   return (
