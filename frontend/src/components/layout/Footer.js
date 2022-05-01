@@ -1,9 +1,10 @@
 import React from "react";
-import { Typography, Grid, Avatar, Paper } from "@mui/material";
+import { Typography, Grid, Paper } from "@mui/material";
+import Avatar from "../utils/Avatar";
 
 export default function Footer() {
   const url =
-    "https://media-exp1.licdn.com/dms/image/C4D03AQG1QTR6icbJ5Q/profile-displayphoto-shrink_800_800/0/1643571640385?e=1651708800&v=beta&t=JRxU_S22NzmYunvS2pCVhdwdyoaY6Rjgj4atWfzCbKA";
+    "https://pbs.twimg.com/profile_images/1487873796124168198/OdKXbCmI_400x400.jpg";
 
   return (
     <Grid sx={{ backgroundColor: "primary.main", p: 3 }} color="primary">

@@ -42,6 +42,7 @@ export default function UpdatePictureModal({
   const updateProfilePicture = () => {
     const data = new FormData();
     data.append("profile_picture", profilePicture);
+    // const newUser = {...user, newProfilePicture: setPicturePath}
 
     axios({
       method: "patch",
