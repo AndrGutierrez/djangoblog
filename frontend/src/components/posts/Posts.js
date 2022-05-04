@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import PostCard from "../components/posts/PostCard";
+import PostCard from "../posts/PostCard";
 import { Grid } from "@mui/material";
-import GeneralModal from "../components/utils/GeneralModal";
-import { deleteModel, listModel } from "../utils/ApiUtils";
-import { setProgress } from "../store/progressSlice";
+import GeneralModal from "../utils/GeneralModal";
+import { deleteModel, listModel } from "../../utils/ApiUtils";
+import { setProgress } from "../../store/progressSlice";
 import { useDispatch, connect } from "react-redux";
 
-function Posts({ setProgress, progress }) {
+function Posts({ setProgress, progress, user }) {
   const POSTS_ROUTE = `${process.env.API_ROUTE}/api/posts`;
+  const [postListRoute, setPostListRoute] = useState("");
   const [posts, setPosts] = useState([]);
   const [deletedItem, setDeletedItem] = useState({});
   const [item, setItem] = useState({});
@@ -21,10 +22,22 @@ function Posts({ setProgress, progress }) {
   };
 
   useEffect(async () => {
-    await listModel(POSTS_ROUTE, progressAction, progress).then(({ body }) => {
-      setPosts(body);
-    });
-  }, [deletedItem]);
+    if (postListRoute) {
+      await listModel(postListRoute, progressAction, progress).then(
+        ({ body }) => {
+          body ? setPosts(body) : setPosts([]);
+        }
+      );
+    }
+  }, [deletedItem, postListRoute]);
+
+  useEffect(() => {
+    if (user) {
+      setPostListRoute(`${process.env.API_ROUTE}/api/user/posts/${user.id}`);
+    } else {
+      setPostListRoute(POSTS_ROUTE);
+    }
+  }, [user]);
 
   const handleOpenModal = (itm) => {
     setItem(itm);
@@ -51,18 +64,7 @@ function Posts({ setProgress, progress }) {
         item={item}
         action={() => handleDelete()}
       ></GeneralModal>
-      <Grid
-        container
-        item
-        spacing={2}
-        sx={{
-          marginTop: "10px",
-          p: 3,
-        }}
-        xs={12}
-        sm={11}
-        md={10}
-      >
+      <Grid container item spacing={2} xs={12} sm={11} md={10}>
         {posts.map((post) => (
           <PostCard
             post={post}

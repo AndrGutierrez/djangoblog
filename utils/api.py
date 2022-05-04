@@ -57,15 +57,25 @@ def get_post(request, slug):
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+def get_posts_by_userid(request, userid):
+    '''get post by user id'''
+    try:
+        post = Post.objects.filter(user=userid)
+        serialized_posts = list_model(request, PostSerializer, Post, 'post', post)
+        return Response(serialized_posts.data)
 
-def list_model(request, model_serializer, model, model_name):
+    except Post.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+def list_model(request, model_serializer, model, model_name, models=None):
     """
     List database entity
     """
     data = []
     next_page = 1
     previous_page = 1
-    models = model.objects.all()
+    if models is None:
+        models = model.objects.all()
     page = request.GET.get('page', 1)
     paginator = Paginator(models, 10)
     try:

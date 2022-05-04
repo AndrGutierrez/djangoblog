@@ -42,8 +42,8 @@ export default function PostCard({ post, handleOpenModal }) {
   const created = new Date(post.created).toLocaleDateString();
   const handleOpen = () => handleOpenModal(post);
   const options = [
-    { action: handleOpen, name: "edit" },
-    { action: handleOpen, name: "delete" },
+    // { action: handleOpen, name: "edit" },
+    { action: handleOpen, name: "Delete" },
   ];
 
   const generateRandomColor = () =>

@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
-from utils.api import store_model, list_model, get_post, delete_checking_user
+from utils.api import store_model, list_model, get_post, delete_checking_user, get_posts_by_userid
 from .serializers import PostSerializer, CommentSerializer
 from .models import Post, Comment
 
@@ -32,6 +32,16 @@ def posts(request, slug=None):
             status=status.HTTP_403_FORBIDDEN)
 
     return response
+
+@api_view(['GET'])
+def user_posts(request, userid=None):
+    model_name = 'post'
+
+    list_posts = list_model(request, PostSerializer, Post, model_name)
+    post = get_posts_by_userid(request, userid=userid)
+    response = post if userid is not None else list_posts
+    return response
+
 
 
 @api_view(['POST', 'DELETE'])

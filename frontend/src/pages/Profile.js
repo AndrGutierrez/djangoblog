@@ -4,7 +4,10 @@ import { Grid, Paper, Typography, Box, Button, TextField } from "@mui/material";
 import Avatar from "../components/utils/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdatePictureModal from "../components/profile/UpdatePictureModal";
+import Posts from "../components/posts/Posts";
 import axios from "axios";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function Profile({ user }) {
   const [currentUser, setCurrentUser] = useState({});
@@ -12,11 +15,12 @@ function Profile({ user }) {
   const [userProfile, setUserProfile] = useState({});
   const [values, setValues] = useState({});
   const [editEnabled, setEditEnabled] = useState(false);
-  const [biography, setBiography] = useState("");
   const CDN_URL = process.env.CDN_URL;
   const PROFILE_PATH =
     user && `${process.env.API_ROUTE}/api/profile/${user.profile.id}`;
   const [profilePicture, setProfilePicture] = useState("");
+  const theme = useTheme();
+  const screenIsSM = useMediaQuery(theme.breakpoints.up("sm"));
 
   useEffect(() => {
     if (user) {
@@ -35,7 +39,8 @@ function Profile({ user }) {
   );
 
   useEffect(
-    () => userProfile && setBiography(userProfile.biography),
+    () =>
+      userProfile && setValues({ ...values, biography: userProfile.biography }),
     [userProfile]
   );
 
@@ -71,7 +76,7 @@ function Profile({ user }) {
     });
   };
   return (
-    <Box display="flex" justifyContent="center" sx={{ p: 3 }}>
+    <Box display="flex" justifyContent="center" sx={{ py: 3 }}>
       {modalOpened && (
         <UpdatePictureModal
           open={modalOpened}
@@ -86,8 +91,8 @@ function Profile({ user }) {
         item
         xs={12}
         sm={10}
-        md={8}
-        lg={7}
+        md={9}
+        lg={8}
         container
         spacing={2}
         sx={{ p: 3 }}
@@ -106,40 +111,43 @@ function Profile({ user }) {
             <EditIcon
               onClick={openEditModal}
               type="file"
+              color="action"
+              fontSize="small"
               sx={{
                 position: "absolute",
                 top: 0,
                 right: 0,
                 bgcolor: "background.paper",
-                border: "1px solid black",
+                border: "1px solid #f2f2f2",
                 borderRadius: "50%",
-                width: 36,
-                height: 36,
+                padding: "5px",
               }}
             ></EditIcon>
           </Grid>
         </Grid>
 
-        <Grid item xs={12} sm={8} md={8} sx={{}}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={8}
+          sx={{ textAlign: !screenIsSM && "center" }}
+        >
           <Typography variant="h3">{currentUser.username}</Typography>
           <Grid item xs={12}>
             {!editEnabled &&
-              (biography ? (
+              (values.biography ? (
                 <>
                   <Typography>{values.biography}</Typography>
                   <Typography variant="body2" color="text.secondary">
                     Edit biography
-                    <EditIcon onClick={enableEdit} />
+                    <EditIcon onClick={enableEdit} fontSize="small" />
                   </Typography>
                 </>
               ) : (
                 <>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    align="center"
-                  >
-                    Add a biography{" "}
+                  <Typography variant="body2" color="text.secondary">
+                    Add a biography <EditIcon onClick={enableEdit} />
                   </Typography>
                 </>
               ))}
@@ -177,6 +185,12 @@ function Profile({ user }) {
               </>
             )}
           </Grid>
+        </Grid>
+        <Grid xs={12} sx={{ pb: 4, pt: 2, py: 2 }}>
+          <Typography variant="h5" component={Grid} sx={{ py: 3 }}>
+            Your posts
+          </Typography>
+          <Posts user={currentUser}></Posts>
         </Grid>
       </Paper>
     </Box>

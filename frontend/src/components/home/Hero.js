@@ -80,6 +80,8 @@ export default function Hero() {
               <Skeleton animation={false} width={"90%"} />
               <Skeleton animation={false} width={"85%"} />
               <Skeleton animation={false} />
+              <Skeleton animation={false} width={"95%"} />
+              <Skeleton animation={false} width={"60%"} />
             </Grid>
           </Paper>
         </Grid>
