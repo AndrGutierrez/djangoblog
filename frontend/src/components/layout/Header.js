@@ -63,7 +63,7 @@ function Header({ progress, type, user, post, login, setProgress }) {
           container
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <ListItem item md={4} lg={5} xl={6} component={Grid}>
+          <ListItem item xs={6} md={4} lg={5} xl={6} component={Grid}>
             <Typography
               component={UnstyledLink}
               to="/"

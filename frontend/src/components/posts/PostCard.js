@@ -46,6 +46,14 @@ export default function PostCard({ post, handleOpenModal }) {
     { action: handleOpen, name: "Delete" },
   ];
 
+  const textPreview = (text) => {
+    const maxLength = 128;
+    if (text.length > maxLength)
+      return post.content.substring(0, maxLength) + "...";
+    else {
+      return text;
+    }
+  };
   const generateRandomColor = () =>
     colors[Math.floor(Math.random() * colors.length)];
   useEffect(async () => {
@@ -132,8 +140,12 @@ export default function PostCard({ post, handleOpenModal }) {
             </Box>
             <Typography variant="h6">{post.title}</Typography>
 
-            <Typography variant="body2" color="text.secondary">
-              {post.content ? post.content.substring(0, 150) : ""}
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ wordBreak: "break-word" }}
+            >
+              {/* {post.content ? textPreview(post.content) : ""} */}
             </Typography>
             <Grid sx={{ display: "flex" }}>
               <Avatar src={profilePicture} sx={{ width: 24, height: 24 }} />

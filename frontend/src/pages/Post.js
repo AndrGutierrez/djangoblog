@@ -90,7 +90,7 @@ export default function Post() {
                 {post.title}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ wordBreak: "break-word" }}>
               <Typography>{post.content}</Typography>
             </Grid>
           </Grid>

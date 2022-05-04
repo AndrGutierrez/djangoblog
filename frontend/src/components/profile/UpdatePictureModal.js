@@ -85,6 +85,7 @@ export default function UpdatePictureModal({
             showPreviews={false}
             showPreviewsInDropzone={false}
             showAlerts={["error"]}
+            maxFileSize={5000000}
           ></DropzoneArea>
           <Button
             xs={12}

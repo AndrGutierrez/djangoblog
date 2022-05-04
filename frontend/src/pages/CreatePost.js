@@ -27,10 +27,13 @@ function CreatedPost(props) {
     const reader = new FileReader();
 
     const thumbnail = e.target.files[0];
-    console.log(thumbnail);
-    reader.readAsDataURL(thumbnail);
-    reader.onloadend = (e) => setThumbnailPath(reader.result);
-    setValues({ ...values, thumbnail });
+    if (thumbnail.size > 5000000) {
+      alert("File is too big");
+    } else {
+      reader.readAsDataURL(thumbnail);
+      reader.onloadend = (e) => setThumbnailPath(reader.result);
+      setValues({ ...values, thumbnail });
+    }
   };
 
   useEffect(() => console.log(thumbnailPath), [thumbnailPath]);
