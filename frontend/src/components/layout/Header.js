@@ -88,7 +88,7 @@ function Header({ progress, type, user, post, login, setProgress }) {
               </UnstyledLink>
             </ListItem>
             {user ? (
-              <ListItem component={Grid} container item md={6} xl={4}>
+              <ListItem component={Grid} container item md={6} lg={6}>
                 <UserMenu user={user}></UserMenu>
               </ListItem>
             ) : (

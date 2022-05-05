@@ -52,6 +52,13 @@ function UserMenu({ user, logout }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const options = [
+    {
+      id: "profile",
+      name: "Profile",
+      action: () => history.push("/user/profile"),
+    },
+  ];
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleLogout = () => {
     axios.get(LOGOUT_ROUTE).then(() => {
@@ -60,13 +67,17 @@ function UserMenu({ user, logout }) {
     });
   };
 
-  const options = [
-    {
-      id: "profile",
-      name: "Profile",
-      action: () => history.push("/user/profile"),
-    },
-  ];
+  const handleUsername = (name) => {
+    const maxLength = 9;
+    let username = name;
+
+    if (username.length > maxLength) {
+      username = `${name.substring(0, maxLength)}...`;
+    }
+
+    return username;
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -90,7 +101,9 @@ function UserMenu({ user, logout }) {
             <Avatar src={profilePicture} sx={{ width: 24, height: 24 }} />
           </Grid>
           <Grid item>
-            <Typography color="white">{user.username}</Typography>
+            <Typography color="white">
+              {handleUsername(user.username)}
+            </Typography>
           </Grid>
         </Grid>
       </Tooltip>
@@ -110,7 +123,7 @@ function UserMenu({ user, logout }) {
           </MenuItem>
         ))}
         <Divider />
-        <MenuItem onClick={() => handleLogout()}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

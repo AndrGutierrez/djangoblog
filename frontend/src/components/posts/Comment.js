@@ -21,7 +21,7 @@ export default function Comment({ comment, handleOpenModal }) {
   const CDN_URL = process.env.CDN_URL;
 
   const options = [
-    { action: () => handleOpenModal(comment), name: "edit" },
+    // { action: () => handleOpenModal(comment), name: "edit" },
     { action: () => handleOpenModal(comment), name: "delete" },
   ];
 

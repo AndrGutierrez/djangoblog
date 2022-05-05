@@ -15,6 +15,7 @@ import { blue, red, purple, pink, green } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { UnstyledLink } from "../utils/UnstyledLink";
 import { getModel } from "../../utils/ApiUtils";
+import { connect } from "react-redux";
 
 const colors = [
   red[500],
@@ -30,22 +31,28 @@ const imageStyles = {
   width: "100%",
 };
 const ITEM_HEIGHT = 48;
-export default function PostCard({ post, handleOpenModal }) {
+function PostCard({ post, handleOpenModal, currentUser }) {
   const [user, setUser] = useState({});
   const [profilePicture, setProfilePicture] = useState("");
   const [styles, setStyles] = useState(imageStyles);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openedMenu, setOpenedMenu] = useState(false);
   const [postThumbnail, setPostThumbnail] = useState("");
+  const [currenUserIsOwner, setCurrentUserIsOwner] = useState(false);
   const CDN_URL = process.env.CDN_URL;
   const USER_PATH = `${process.env.API_ROUTE}/api/users`;
   const created = new Date(post.created).toLocaleDateString();
   const handleOpen = () => handleOpenModal(post);
   const options = [
-    // { action: handleOpen, name: "edit" },
+    // { action: handleOpen, name: "Edit" },
     { action: handleOpen, name: "Delete" },
   ];
 
+  useEffect(() => {
+    if (currentUser && user != {}) {
+      currentUser.id === user.id && setCurrentUserIsOwner(true);
+    }
+  }, [user, currentUser]);
   const textPreview = (text) => {
     const maxLength = 128;
     if (text.length > maxLength)
@@ -101,9 +108,11 @@ export default function PostCard({ post, handleOpenModal }) {
 
           <CardContent sx={{ position: "relative" }}>
             <Box sx={{ position: "absolute", right: 5, top: 5 }}>
-              <IconButton onClick={handleClick}>
-                <MoreVertIcon color="action" fontSize="small" />
-              </IconButton>
+              {currenUserIsOwner && (
+                <IconButton onClick={handleClick}>
+                  <MoreVertIcon color="action" fontSize="small" />
+                </IconButton>
+              )}
               <Menu
                 id="long-menu"
                 open={openedMenu}
@@ -171,3 +180,9 @@ export default function PostCard({ post, handleOpenModal }) {
     </Grid>
   );
 }
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user,
+});
+
+export default connect(mapStateToProps, null)(PostCard);
