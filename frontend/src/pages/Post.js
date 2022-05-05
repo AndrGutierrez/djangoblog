@@ -58,8 +58,10 @@ export default function Post() {
           item
           sx={{ marginTop: "-75px", p: 2, position: "relative" }}
           xs={12}
-          sm={11}
-          md={10}
+          sm={10}
+          md={8}
+          lg={6}
+          xl={5}
         >
           <Grid container spacing={2} sx={{ px: 2 }}>
             <Grid item>
