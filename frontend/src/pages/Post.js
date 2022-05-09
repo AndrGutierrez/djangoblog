@@ -37,6 +37,16 @@ export default function Post() {
       setProfilePicture(`${CDN_URL}/${user.profile.profile_picture}`),
     [user]
   );
+
+  const formatContent = (content) => {
+    if (content) {
+      //detect line break in content
+      const regex = /\n/g;
+      const formattedContent = content.replace(regex, "<br /> ");
+
+      return formattedContent;
+    }
+  };
   return (
     <Grid container display="flex" justifyContent="center">
       <Grid
@@ -93,7 +103,11 @@ export default function Post() {
               </Typography>
             </Grid>
             <Grid item xs={12} sx={{ wordBreak: "break-word" }}>
-              <Typography>{post.content}</Typography>
+              <Typography
+                dangerouslySetInnerHTML={{
+                  __html: formatContent(post.content),
+                }}
+              ></Typography>
             </Grid>
           </Grid>
           <CommentBox post={post} comments={post.comments} />
