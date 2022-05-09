@@ -19,7 +19,7 @@ function CommentBox(props) {
   const [deletedItem, setDeletedItem] = useState(null);
   const COMMENT_PATH = `${process.env.API_ROUTE}/api/comments/`;
   const modalData = {
-    title: "Are you sure you want to delete this post?",
+    title: "Are you sure you want to delete this comment?",
     description: "You won't be able to recover it",
   };
 
@@ -49,19 +49,18 @@ function CommentBox(props) {
     }
   }, [props]);
 
-  useEffect(() => {
-    if (comments) {
-      setCommentsList(comments.filter(({ id }) => id !== deletedItem.id));
-    }
-  }, [deletedItem]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (commentValid)
-      axios.post(COMMENT_PATH, values).then((response) => {
-        setCommentsList([...commentsList, response.data]);
-        setValues({ content: "" });
-      });
+      axios
+        .post(COMMENT_PATH, values)
+        .catch((e) => {
+          console.log("++++", e.response.data);
+        })
+        .then((response) => {
+          setCommentsList([...commentsList, response.data]);
+          setValues({ ...values, content: "" });
+        });
   };
 
   const handleOpenModal = (itm) => {
@@ -75,7 +74,7 @@ function CommentBox(props) {
         alert("you are not the owner of this comment");
         throw e;
       })
-      .then(() => setDeletedItem({ id: item.id }));
+      .then(() => setCommentsList(comments.filter(({ id }) => id !== item.id)));
     handleCloseModal();
   };
 
@@ -97,6 +96,7 @@ function CommentBox(props) {
           multiline
           rows={4}
           fullWidth
+          value={values.content}
           onChange={handleChange}
           name="content"
         />
