@@ -54,12 +54,10 @@ function PostCard({ post, handleOpenModal, currentUser }) {
     }
   }, [user, currentUser]);
   const textPreview = (text) => {
-    const maxLength = 128;
-    if (text.length > maxLength)
-      return post.content.substring(0, maxLength) + "...";
-    else {
-      return text;
-    }
+    const maxLength = 32;
+    const txt =
+      text.length > maxLength ? text.substr(0, maxLength) + "..." : text;
+    return txt;
   };
   const generateRandomColor = () =>
     colors[Math.floor(Math.random() * colors.length)];
@@ -96,7 +94,7 @@ function PostCard({ post, handleOpenModal, currentUser }) {
   return (
     <Grid item xs={12} sm={6} md={4} xl={3}>
       <UnstyledLink to={`/posts/${user.username}/${post.slug}`}>
-        <Card elevation={2}>
+        <Card elevation={2} sx={{ height: "100%" }}>
           {postThumbnail && (
             <CardMedia
               component={"img"}
@@ -147,7 +145,7 @@ function PostCard({ post, handleOpenModal, currentUser }) {
                 ))}
               </Menu>
             </Box>
-            <Typography variant="h6">{post.title}</Typography>
+            <Typography variant="h6">{textPreview(post.title)}</Typography>
 
             <Typography
               variant="body2"
