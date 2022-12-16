@@ -70,6 +70,7 @@ function Login({ login }) {
     await axios
       .post(LOGIN_ROUTE, values)
       .catch((e) => {
+        console.log(e);
         throw e;
       })
 
