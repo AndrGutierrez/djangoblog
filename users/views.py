@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.http import HttpResponse
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import login, logout, authenticate
+from rest_framework.views import Response
 from users.models import User, Profile
 from utils.api import store_user, list_model, get_user_by_email, get_model_by_pk, update_model
 from .serializers import UserSerializer, ProfileSerializer
@@ -17,6 +18,7 @@ from .serializers import UserSerializer, ProfileSerializer
 def login_view(request):
     """login view"""
 
+    response:HttpResponse=HttpResponse()
     try:
         if request.method == 'GET':
             if not request.user.is_authenticated:

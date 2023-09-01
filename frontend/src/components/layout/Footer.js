@@ -7,7 +7,10 @@ export default function Footer() {
     "https://pbs.twimg.com/profile_images/1487873796124168198/OdKXbCmI_400x400.jpg";
 
   return (
-    <Grid sx={{ backgroundColor: "primary.main", p: 3 }} color="primary">
+    <Grid
+      sx={{ backgroundColor: "primary.main", p: 3, visibility: "hidden" }}
+      color="primary"
+    >
       <Grid
         component={Paper}
         sx={{ display: "flex", alignItems: "center", p: 1 }}
