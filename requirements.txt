@@ -1,8 +1,8 @@
+mysqlclient
 django 
 djangorestframework
 python-dotenv
 django-cors-headers
-mysqlclient
 pytz
 pillow
 django-autoslug
